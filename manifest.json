@@ -17,9 +17,8 @@
     "background_color": "#191919",
     "theme_color": "#191919",
     "icons": [{
-        "src": "./Screenshot_20241216-125252_1.jpg",
+        "src": "./Screenshot_20241216-125252_2.png",
         "sizes": "544x544",
-        "type": "image/jpg",
         "purpose": "any"
     }],
     "headers": {
