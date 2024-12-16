@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="X-UA-COMPATIBLE" content="ie=edge" />
+
+    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no" />
+
+    <title>Audio Recorder</title>
+
+    <style type="text/css" media="all">
+        html {
+            width: 100vw;
+            height: 100vh;
+        }
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-image: repeating-conic-gradient(from 0deg, #191919 0deg 15deg, #282828 15deg 35deg);
+            background-size: 1em 1em;
+            user-select: none;
+        }
+        * {
+            font-family: Georgia;
+            font-style: normal;
+            color: white;
+        }
+        *::-webkit-scrollbar {
+            display: none;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+        header {
+            background: linear-gradient(135deg, #f06, #f90);
+            padding: 1vw;
+        }
+        header h1 {
+            font-size: 5vw;
+            color: #fff;
+            margin: 2vw;
+        }
+        button {
+            background: #333;
+            color: white;
+            outline: none;
+            padding: 3vw;
+            margin: 2vw;
+            font-size: 5vw;
+            text-align: center;
+            font-weight: bolder;
+            width: 14vw;
+            height: 14vw;
+            border-radius: 14vw;
+            border: none;
+            box-shadow: 0 2px 5px #111;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 1vw;
+            border-radius: 1vw;
+            width: 100%;
+            outline: none;
+            background: #555;
+            transition: background 0.3s ease;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 1vw;
+            border-radius: 1vw;
+            width: 100%;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #f06, #f90);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            margin-top: -6px;
+            transition: transform 0.2s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            /* Enlarge on hover */
+        }
+        input[type="range"]::-moz-range-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #f06, #f90);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            margin-top: -6px;
+            transition: transform 0.2s ease;
+        }
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            /* Enlarge on hover */
+        }
+        .paste {
+            margin: 5% auto;
+            width: 95%;
+            height: 65%;
+            padding: 1vw;
+        }
+        .cont {
+            margin: 5% auto;
+            width: 95%;
+            height: 15%;
+            border-radius: 2vw;
+            text-align: center;
+        }
+        .sec1, .sec2, .sec3, sec4 {
+            width: 70vw;
+            height: 70vw;
+            border-radius: 70vw;
+            text-align: center;
+            margin: 10% auto;
+            background: #111;
+        }
+        .sec2 {
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50vw;
+            background: #222;
+        }
+        .sec3 {
+            width: 30vw;
+            height: 30vw;
+            border-radius: 30vw
+            text-align: center;
+            background: #333;
+        }
+        .sec4 {
+            width: 15vw;
+            height: 15vw;
+            border-radius: 15vw;
+            border: #fff 0.05em solid;
+            font-size: 5.5vw;
+            text-align: center;
+            padding: 1vw;
+            background: linear-gradient(135deg, #f06, #f90);
+        }
+        .animate {
+            animation: rotate 2s infinite linear;
+        }
+        .rept {
+            margin: 5% auto;
+            padding: 1vw;
+            text-align: center;
+            font-size: 4vw;
+            color: #f44336;
+            background: #333;
+            border-radius: 2vw;
+            width: 70%;
+        }
+        .ctrls {
+            display: inline-block;
+            font-size: 3.5vw;
+            text-align: center;
+            margin: 1.5vw;
+            margin-right: 3vw;
+            padding: 1.8vw;
+            border-radius: 3vw;
+            background: #333;
+            color: #4caf50;
+            width: 12vw;
+        }
+        .ctrls:hover {
+            color: #f44336;
+            border: #f44336 0.01em solid;
+        }
+        .logo {
+            font-size: 7vw;
+            padding: 1vw;
+        }
+        .ads {
+            width: 12vw;
+            height: 12vw;
+            border-radius: 12vw;
+            background-image: linear-gradient(135deg, #f06, #f90);
+            font-size: 4vw;
+            border: #fff 0.01em solid;
+            margin: 5% auto;
+            margin-left: 88%;
+            animation: incred 2s infinite ease-out;
+        }
+        #start, #stop, #pause, #canc, #continue {
+            position: absolute;
+            left: 41vw;
+        }
+        #pause, #stop, #canc, #continue {
+            visibility: hidden;
+        }
+        #pause, #continue {
+            left: 26vw;
+            font-size: 4vw;
+        }
+        #canc {
+            left: 56vw;
+        }
+@keyframes rotate {
+            to {
+                transform: rotateZ(360deg);
+            }
+        }
+@keyframes incred {
+            50% {
+                transform: scale(0.5);
+            }
+            100% {
+                transform: scale(1.0);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1> <span class="logo">&#9733</span>flashwave </h1>
+    </header>
+
+    <section>
+        <div class="paste">
+            <div class="sec1">
+                <div class="sec2">
+                    <div class="sec3">
+                        <button class="sec4">
+                            <span>&#9733</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="ads">
+                <a id="ads" href="https://luglawhaulsano.net/4/8644003" target="_blank">&hearts;</a>
+            </button>
+        </div>
+    </section>
+
+    <section>
+        <div class="cont">
+            <div id="ply" class="ctrls">
+                play
+            </div>
+            <div id="pus" class="ctrls">
+                pause
+            </div>
+            <div id="stp" class="ctrls">
+                stop
+            </div>
+            <div id="dwl" class="ctrls">
+                save
+            </div>
+            <input type="range" name="slider" id="slider" min="0" max="100" value="0" />
+            <br>
+            <button id="canc"> &times; </button>
+            <button id="stop"> &lt;&gt; </button>
+            <button id="start"> &lt;&gt; </button>
+            <button id="pause"> || </button>
+            <button id="continue"> || </button>
+            <br><br><br>
+            <div id="rept" class="rept">
+                00:00
+            </div>
+            <audio id="audy" preload="true" hidden></audio>
+        </div>
+    </section>
+    <a id="download" hidden>download</a>
+
+    <script src="Audio.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+
+</html>
