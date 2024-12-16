@@ -252,7 +252,7 @@ const setCtrls = (url) => {
 
 window.onload = function() {
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./worker.js", {"scope": "/"}).then(res => {
+        navigator.serviceWorker.register("./worker.js").then(res => {
             console.log("worker registered successfully: ", res)
         }).catch(err => {
             console.error("worker error: ", err)
