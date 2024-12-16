@@ -256,7 +256,7 @@ window.onload = function() {
             console.log("worker registered successfully: ", res)
         }).catch(err => {
             console.error("worker error: ", err)
+            alert(err)
         })
-        alert("yes")
     }
 }
