@@ -1,11 +1,6 @@
-const cacheFiles = [
-    "./Audio.html",
-    "./Audio.js",
-    "./worker.js",
-    "./manifest.json"
-]
+const cacheFiles = ["./"]
 
-const cacheName = "star_wave";
+const cacheName = "StarWave";
 
 self.addEventListener("install", function(event) {
     event.waitUntil(caches.open(cacheName).then(cache => {
