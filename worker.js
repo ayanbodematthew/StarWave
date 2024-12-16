@@ -1,6 +1,6 @@
 const cacheFiles = ["/Audio.html", "/Audio.js", "/Screenshot_20241216-125252_1.jpg"]
 
-const cacheName = "v1";
+const cacheName = "v2";
 
 self.addEventListener("install", (event) => {
     event.waitUntil(caches.open(cacheName).then(cache => {
@@ -22,6 +22,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
     if (event.request.method !== "GET") {
+        console.log("Not to cache")
         return;
     }
     event.respondWith(fetch(event.request).then(response => {
