@@ -1,6 +1,13 @@
-const cacheFiles = ["./Audio.html", "./Audio.js"]
+const cacheFiles = ["/", "/Audio.html", "/Audio.js"]
 
-const cacheName = "Star_Wave";
+const cacheName = "v1";
+
+self.addEventListener("install", (event) => {
+    event.waitUntil(caches.open(cacheName).then(cache => {
+        console.log("Worker adding file to cache: ", cache)
+        return cache.addAll(cacheFiles)
+    }))
+})
 
 self.addEventListener("activate", (event) => {
     event.waitUntil(caches.keys().then(cacheNames => {
@@ -10,13 +17,6 @@ self.addEventListener("activate", (event) => {
                 return caches.delete(thisCacheName)
             }
         }))
-    }))
-})
-
-self.addEventListener("install", (event) => {
-    event.waitUntil(caches.open(cacheName).then(cache => {
-        console.log("Worker adding file to cache: ", cache)
-        return cache.addAll(cacheFiles)
     }))
 })
 
