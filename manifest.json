@@ -19,6 +19,7 @@
     "icons": [{
         "src": "./Screenshot_20241216-125252_1.jpg",
         "sizes": "544x544",
+        "type": "image/jpg",
         "purpose": "any"
     }],
     "headers": {
