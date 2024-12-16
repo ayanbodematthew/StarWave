@@ -9,7 +9,7 @@ const cacheName = "star_wave";
 
 self.addEventListener("install", function(event) {
     event.waitUntil(caches.open(cacheName).then(cache => {
-        console.log("Worker adding file to cache: ", cache)
+        console.log("Worker adding file to cache: "+ cache)
         return cache.addAll(cacheFiles)
     }))
 })
@@ -18,7 +18,7 @@ self.addEventListener("activate", function(event) {
     event.waitUntil(caches.keys().then(cacheNames => {
         return Promise.all(cacheNames.map(thisCacheName => {
             if (thisCacheName !== cacheName) {
-                console.log("Worker removing old cache: ", thisCacheName)
+                console.log("Worker removing old cache: "+ thisCacheName)
                 return caches.delete(thisCacheName)
             }
         }))
