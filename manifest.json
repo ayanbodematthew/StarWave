@@ -1,9 +1,9 @@
 {
     "name": "StarWave",
     "short_name": "StarWave",
-    "id": "./Audio.html",
+    "id": "./",
     "version": "0.0.1",
-    "start_url": "./Audio.html",
+    "start_url": "./",
     "scope": "./",
     "description": "A media audio recorder",
     "display": "fullscreen",
