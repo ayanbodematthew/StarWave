@@ -3,7 +3,7 @@
     "short_name": "StarWave",
     "id": "./",
     "version": "0.0.1",
-    "start_url": "./",
+    "start_url": "./Audio.html",
     "scope": "./",
     "description": "A media audio recorder",
     "display": "fullscreen",
