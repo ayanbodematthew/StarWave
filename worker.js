@@ -1,4 +1,4 @@
-const cacheFiles = ["/Audio.html", "/Audio.js"]
+const cacheFiles = ["/Audio.html", "/Audio.js", "/Screenshot_20241216-125252_1.jpg"]
 
 const cacheName = "v1";
 
