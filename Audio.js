@@ -241,7 +241,7 @@ const setCtrls = (url) => {
             }
             var sav = document.getElementById("download")
             sav.href = url;
-            sav.download = `flashwave_${id}.wav`;
+            sav.download = `StarWave_${id}.wav`;
             sav.click()
 
             var ads = document.getElementById("ads")
