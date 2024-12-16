@@ -1,6 +1,8 @@
 const cacheFiles = [
     "./Audio.html",
-    "./Audio.js"
+    "./Audio.js",
+    "./worker.js",
+    "./manifest.json"
 ]
 
 const cacheName = "star_wave";
