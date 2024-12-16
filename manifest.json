@@ -1,0 +1,29 @@
+{
+    "name": "StarWave",
+    "short_name": "StarWave",
+    "id": "./Audio.html",
+    "version": "0.0.1",
+    "start_url": "./Audio.html",
+    "scope": "./",
+    "descrition": "A media audio recorder",
+    "display": "fullscreen",
+    "display_override": [
+        "fullscreen",
+        "standalone",
+        "tabbed"
+    ],
+    "orientation": "portrait-primary",
+    "background_color": "#191919",
+    "theme_color": "#191919",
+    "icons": [{
+        "src": "/storage/emulated/0/Xender/image/Screenshot_20241216-125252_1.jpg",
+        "sizes": "544x544",
+        "purpose": "any"
+    }],
+    "offline_access": true,
+    "serviceworker": {
+        "src": "./worker.js",
+        "scope": "./",
+        "use_cache": true
+    }
+}
