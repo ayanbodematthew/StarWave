@@ -16,7 +16,7 @@
     "background_color": "#191919",
     "theme_color": "#191919",
     "icons": [{
-        "src": "/storage/emulated/0/Xender/image/Screenshot_20241216-125252_1.jpg",
+        "src": "./Screenshot_20241216-125252_1.jpg",
         "sizes": "544x544",
         "purpose": "any"
     }],
