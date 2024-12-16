@@ -253,7 +253,10 @@ const setCtrls = (url) => {
 window.onload = function() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("worker.js").then(res => {
-            console.log("worker registered successfully: ", res)
+            res.addEventListener("updatefound", () => {
+                var update = res.installing;
+                console.log(update)
+            })
         }).catch(err => {
             console.error("worker error: ", err)
             alert(err)
