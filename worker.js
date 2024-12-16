@@ -1,6 +1,6 @@
-const cacheFiles = ["/Audio.html", "/Audio.js", "/Screenshot_20241216-125252_1.jpg"]
+const cacheFiles = ["/Audio.html", "/Audio.js", "/Screenshot_20241216-125252_2.jpg"]
 
-const cacheName = "v2";
+const cacheName = "v3";
 
 self.addEventListener("install", (event) => {
     event.waitUntil(caches.open(cacheName).then(cache => {
