@@ -2,25 +2,25 @@ const cacheFiles = ["./"]
 
 const cacheName = "StarWave";
 
-self.addEventListener("install", function(event) {
+self.addEventListener("install", (event) => {
     event.waitUntil(caches.open(cacheName).then(cache => {
-        console.log("Worker adding file to cache: "+ cache)
+        console.log("Worker adding file to cache: ", cache)
         return cache.addAll(cacheFiles)
     }))
 })
 
-self.addEventListener("activate", function(event) {
+self.addEventListener("activate", (event) => {
     event.waitUntil(caches.keys().then(cacheNames => {
         return Promise.all(cacheNames.map(thisCacheName => {
             if (thisCacheName !== cacheName) {
-                console.log("Worker removing old cache: "+ thisCacheName)
+                console.log("Worker removing old cache: ", thisCacheName)
                 return caches.delete(thisCacheName)
             }
         }))
     }))
 })
 
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", (event) => {
     event.respondWith(fetch(event.request).then(response => {
         const clone = response.clone();
         caches.open(cacheName).then(cache => {
@@ -28,7 +28,7 @@ self.addEventListener("fetch", function(event) {
                 clone)
         })
         return response;
-    }).catch(function() => {
+    }).catch(() => {
         return caches.match(event.request).then(resp => {
             if (resp) {
                 return resp;
