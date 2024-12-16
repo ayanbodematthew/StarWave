@@ -5,12 +5,13 @@
     "version": "0.0.1",
     "start_url": "./Audio.html",
     "scope": "./",
-    "descrition": "A media audio recorder",
+    "description": "A media audio recorder",
     "display": "fullscreen",
     "display_override": [
         "fullscreen",
         "standalone",
-        "tabbed"
+        "tabbed",
+        "window-controls-overlay"
     ],
     "orientation": "portrait-primary",
     "background_color": "#191919",
@@ -20,6 +21,9 @@
         "sizes": "544x544",
         "purpose": "any"
     }],
+    "headers": {
+        "Access-Control-Allow-Origin": "*"
+    },
     "offline_access": true,
     "serviceworker": {
         "src": "./worker.js",
