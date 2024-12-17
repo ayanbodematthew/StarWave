@@ -10,6 +10,8 @@ const cancBtn = document.getElementById("canc")//button to cancel recording
 
 const contBtn = document.getElementById("continue")//button to continue the recording
 
+const rept = document.getElementById("rept")//container for recording timeline
+
 const fily = document.getElementById("fily")//button to choose audio file from filesystem
 
 const file = document.getElementById("file")//input file element
