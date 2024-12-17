@@ -25,6 +25,7 @@ const handlesuccess = function(stream) {
 
     var secs = 0;
     var init = "";
+    var puse = "no";
 
     //getting things ready for recording
     const mediaRec = new MediaRecorder(stream)
@@ -70,7 +71,7 @@ const handlesuccess = function(stream) {
     }
 
     setInterval(function() {
-        if (typeof secs == "number") {
+        if (puse == "no") {
             secs++;
             var format = getFormat(secs)
             rept.innerHTML = format;
@@ -107,7 +108,7 @@ const handlesuccess = function(stream) {
 
             pauseBtn.style.visibility = "hidden";
             contBtn.style.visibility = "visible";
-            secs = `${secs}`;
+            puse = "yes";
 
             mediaRec.pause()
         })
@@ -126,7 +127,7 @@ const handlesuccess = function(stream) {
 
             pauseBtn.style.visibility = "visible";
             contBtn.style.visibility = "hidden";
-            secs = parseInt(secs);
+            puse = "no";
 
             mediaRec.resume()
         })
@@ -142,8 +143,10 @@ const handlesuccess = function(stream) {
             pauseBtn.style.visibility = "hidden";
             cancBtn.style.visibility = "hidden";
 
-            rept.innerHTML = "00:00";
+            rept.innerHTML = getFormat(0);
             init = "yes";
+            puse = "yes";
+            secs = 0;
             mediaRec.stop()
         })
 
