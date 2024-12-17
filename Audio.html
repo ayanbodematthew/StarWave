@@ -18,7 +18,7 @@
     <style type="text/css" media="all">
         html {
             width: 100vw;
-            height: 91vh;
+            height: 92vh;
         }
         body {
             width: 100%;
@@ -169,7 +169,7 @@
             border-radius: 2vw;
             width: 70%;
         }
-        .ctrls {
+        .ctrls, .ctrl2 {
             display: inline-block;
             font-size: 3.5vw;
             text-align: center;
@@ -181,7 +181,11 @@
             color: #4caf50;
             width: 12vw;
         }
-        .ctrls:hover {
+        .ctrl2 {
+            display: none;
+            width: 17vw;
+        }
+        .ctrls:hover, .ctrl2:hover {
             color: #f44336;
             border: #f44336 0.01em solid;
         }
@@ -199,6 +203,32 @@
             margin: 5% auto;
             margin-left: 88%;
             animation: incred 2s infinite ease-out;
+        }
+        .caty {
+            position: absolute;
+            padding: 1vw;
+            margin: 2vw;
+            border-radius: 3vw;
+            background: rgba(0, 0, 0, 0.3);
+            width: 89%;
+            font-size: 3vw;
+        }
+        .catag {
+            padding: 2vw;
+            font-size: 3.5vw;
+            font-weight: bold;
+            background: #f44336;
+            border-top-left-radius: 2vw;
+            border-top-right-radius: 2vw;
+        }
+        .loky {
+            margin: 1vw;
+            padding: 1vw;
+            border-top: #fff 0.01em solid;
+            border-bottom: #fff 0.01em solid;
+            min-height: 15vw;
+            max-height: 80vw;
+            overflow: auto;
         }
         #start, #stop, #pause, #canc, #continue {
             position: absolute;
@@ -239,6 +269,15 @@
 
     <section>
         <div class="paste">
+            <div class="caty">
+                <div class="catag">
+                    My Records
+                </div>
+                <br>
+                <div id="loky" class="loky">
+                    No Records
+                </div>
+            </div>
             <div class="sec1">
                 <div class="sec2">
                     <div class="sec3">
@@ -269,6 +308,9 @@
             <div id="dwl" class="ctrls">
                 save
             </div>
+            <div id="dwld" class="ctrl2">
+                download
+            </div>
             <input type="range" name="slider" id="slider" min="0" max="100" value="0" />
             <br>
             <button id="canc"> &times; </button>
@@ -280,7 +322,7 @@
             <div id="rept" class="rept">
                 00:00
             </div>
-            <audio id="audy" preload="true" hidden></audio>
+            <audio id="audy" preload="true" src="" hidden></audio>
         </div>
     </section>
     <a id="download" hidden>download</a>

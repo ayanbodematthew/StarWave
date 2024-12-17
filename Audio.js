@@ -13,6 +13,8 @@ const contBtn = document.getElementById("continue")//button to continue the reco
 /* function to oversee the recording, processing, playing and sending the audio to the server.
 */
 
+var db;
+
 const handlesuccess = function(stream) {
 
     var secs = 0;
@@ -40,19 +42,6 @@ const handlesuccess = function(stream) {
                 type: "audio/wav"
             })
 
-            //uploading to server
-            const formdata = new FormData()
-            formdata.append("audio", blob, "recording.wav")
-
-            fetch("https://path_to_your_server/upload", {
-                method: "POST",
-                body: formdata
-            }).then(res => {
-                console.log("Upload successful: ", res)
-            }).catch(err => {
-                console.error("Upload error: ", err)
-            })
-
             //generating url for audio Blob
             const url = URL.createObjectURL(blob)
 
@@ -60,7 +49,8 @@ const handlesuccess = function(stream) {
             var elem = document.getElementById("audy")
             elem.setAttribute("src", url)
 
-            setCtrls(url)
+            window.urli = url;
+            window.blob = blob;
 
         }
     }
@@ -167,9 +157,15 @@ startBtn.addEventListener("click", function() {
     }).then(handlesuccess).catch(err => {
         console.error("Error: ", err)
     })
+
+    const dwl = document.getElementById("dwl")
+    const dwld = document.getElementById("dwld")
+
+    dwld.style.display = "none";
+    dwl.style.display = "inline-block";
 })
 
-const setCtrls = (url) => {
+const setCtrls = () => {
 
     const ply = document.getElementById("ply")//for playing the recordings
 
@@ -177,7 +173,9 @@ const setCtrls = (url) => {
 
     const stp = document.getElementById("stp")//for stoping the played recordings
 
-    const dwl = document.getElementById("dwl")//for saving the recordings by downloading
+    const dwl = document.getElementById("dwl")//for saving the recordings
+
+    const dwld = document.getElementById("dwld")//for downloading the recordings
 
     var elem = document.getElementById("audy")
 
@@ -239,27 +237,158 @@ const setCtrls = (url) => {
                 var rand = Math.floor(Math.random() * 9)
                 id += rand;
             }
-            var sav = document.getElementById("download")
-            sav.href = url;
-            sav.download = `StarWave_${id}.wav`;
-            sav.click()
+            var sav = `StarWave_${id}.wav`;
 
-            var ads = document.getElementById("ads")
-            ads.click()
+            const addData = (data) => {
+                const transaction = db.transaction("Records", "readwrite");
+                const store = transaction.objectStore("Records");
+                store.add(data);
+
+                transaction.oncomplete = () => {
+                    console.log("Data added successfully");
+
+                    functs.setNewRec(sav, window.urli, id)
+
+                    const dwl = document.getElementById("dwl")
+                    const dwld = document.getElementById("dwld")
+
+                    dwl.style.display = "none";
+                    dwld.style.display = "inline-block";
+                };
+
+                transaction.onerror = (event) => {
+                    console.error("Transaction error:", event.target.error);
+                };
+            };
+
+            //save record to database
+            addData({
+                id: id, nam: sav, blob: window.blob
+            });
+        })
+
+    //download the audio stream
+    dwld.addEventListener("click",
+        function() {
+            var trigger = document.getElementById("download")
+            trigger.href = window.url;
+            trigger.download = window.nam;
+            trigger.click()
         })
 
 }
 
+const functs = {
+    setNewRec(nam,
+        url,
+        id) {
+
+        var roy = window.roy + 1;
+        var elem = `<div id='aud${id}' style='padding: 1vw'> <span style='font-size: 8vw'>&rarr;</span> ${nam} </div> <div id='roy${roy}'></div>`;
+
+        var fog = document.getElementById("loky").innerHTML;
+
+        if (!fog.includes("No Records")) {
+            document.getElementById(`roy${window.roy}`).innerHTML = elem;
+        } else {
+            document.getElementById("loky").innerHTML = elem;
+        }
+        window.roy = roy;
+
+        var ele = document.getElementById(`aud${id}`)
+
+        ele.addEventListener("click", () => {
+            elem = document.getElementById("audy")
+            elem.setAttribute("src", url)
+
+            const ply = document.getElementById("ply")
+            ply.click()
+
+            const dwl = document.getElementById("dwl")
+            const dwld = document.getElementById("dwld")
+
+            dwl.style.display = "none";
+            dwld.style.display = "inline-block";
+        })
+
+        window.url = url;
+        window.nam = nam;
+    },
+    getRecs() {
+        //read data stored in database
+        const transaction = db.transaction("Records", "readonly");
+
+        const store = transaction.objectStore("Records");
+
+        const request = store.openCursor();
+
+        const allData = []; // Array to store all records
+
+        request.onsuccess = (event) => {
+            const cursor = event.target.result;
+
+            if (cursor) {
+                allData.push(cursor.value); // Add the current record to the array
+                cursor.continue(); // Move to the next record
+            } else {
+                console.log("All data retrieved using cursor");
+                console.log(allData)
+
+                allData.forEach(elem => {
+
+                    var url = URL.createObjectURL(elem.blob, {
+                        type: "audio/wav"
+                    })
+
+                    functs.setNewRec(elem.nam, url, elem.id)
+
+                })
+            }
+        };
+
+        request.onerror = (event) => {
+            console.error("Cursor error:", event.target.error);
+        };
+    }
+}
+
 window.onload = function() {
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("worker.js").then(res => {
+        navigator.serviceWorker.register("./worker.js").then(res => {
             res.addEventListener("updatefound", () => {
                 var update = res.installing;
                 console.log(update)
             })
         }).catch(err => {
             console.error("worker error: ", err)
-            alert(err)
         })
     }
+
+    window.roy = 0;
+    setCtrls()
+
+    //create an instance of indexedDB database
+    const request = indexedDB.open("StarWave_DB", 1);
+
+    request.onupgradeneeded = (event) => {
+        db = event.target.result;
+
+        // Create an object store if it doesn't exist
+        if (!db.objectStoreNames.contains("Records")) {
+            db.createObjectStore("Records", {
+                keyPath: "id"
+            }); // Specify a keyPath
+        }
+    };
+
+    request.onsuccess = (event) => {
+        db = event.target.result;
+        functs.getRecs()
+        console.log("Database opened successfully");
+    };
+
+    request.onerror = (event) => {
+        console.error("Database error:", event.target.error);
+    };
+
 }
