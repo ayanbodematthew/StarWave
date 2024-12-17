@@ -97,6 +97,9 @@ const handlesuccess = function(stream) {
             stopBtn.style.border = "none";
             stopBtn.classList.remove("animate")
 
+            stopBtn.disabled = true;
+            cancBtn.disabled = true;
+
             contBtn.style.color = "#f44336";
             contBtn.style.border = " #f44336 0.01em solid";
 
@@ -112,6 +115,9 @@ const handlesuccess = function(stream) {
             stopBtn.style.color = "#f44336";
             stopBtn.style.border = " #f44336 0.01em solid";
             stopBtn.classList.add("animate")
+
+            stopBtn.disabled = false;
+            cancBtn.disabled = false;
 
             contBtn.style.color = "#fff";
             contBtn.style.border = "none";
@@ -134,7 +140,7 @@ const handlesuccess = function(stream) {
             pauseBtn.style.visibility = "hidden";
             cancBtn.style.visibility = "hidden";
 
-            rept.innerHTML = "";
+            rept.innerHTML = "00:00";
             init = "yes";
             mediaRec.stop()
         })
