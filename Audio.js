@@ -344,7 +344,7 @@ const functs = {
 
         //sorting out the records
         var roy = window.roy + 1;
-        var elem = `<div id='pad${roy}' style='padding: 1vw; display: flex'> <div id='aud${id}' class='tup'> <span id='pol${id}' style='font-size: 8vw'>&rarr;</span> ${nam} </div> <button id='del${id}' class='del'>delete</button> </div> <div id='roy${roy}'></div>`;
+        var elem = `<div id='pad${roy}' style='padding: 1vw; display: flex'> <div id='aud${id}' class='tup'> ${nam} </div> <button id='del${id}' class='del'>delete</button> </div> <div id='roy${roy}'></div>`;
 
         var fog = document.getElementById("loky").innerHTML;
 
@@ -357,7 +357,6 @@ const functs = {
 
         //Event listener for playing and deleting records
         var ele = document.getElementById(`aud${id}`)
-        var pol = document.getElementById(`pol${id}`)
         var del = document.getElementById(`del${id}`)
 
         //for playing
@@ -366,17 +365,12 @@ const functs = {
             //change color of record name playing
             if (window.ply == "") {
                 ele.style.color = "#4caf50";
-                pol.style.color = "#4caf50";
             } else {
                 var tag = window.ply;
-                var tag2 = window.ply2;
                 document.getElementById(tag).style.color = "#fff";
-                document.getElementById(tag2).style.color = "#fff";
                 ele.style.color = "#4caf50";
-                pol.style.color = "#4caf50";
             }
             window.ply = `aud${id}`;
-            window.ply2 = `pol${id}`;
 
             //set src of the audio element and play
             elem = document.getElementById("audy")
@@ -467,6 +461,17 @@ const audEnd = () => {
     e.currentTime = 0;
 }
 
+const handleNotification = (title, body) => {
+
+    navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification(title, {
+            body: body,
+            icon: './Screenshot_20241216-125252_2.png'
+        });
+    });
+
+}
+
 window.onload = function() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("./worker.js").then(res => {
@@ -507,5 +512,28 @@ window.onload = function() {
     request.onerror = (event) => {
         console.error("Database error:", event.target.error);
     };
+
+    const noty = window.localStorage.getItem("noty")
+
+    if (noty !== "yes") {
+
+        const tits = "Welcome Message";
+        const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+
+        if (Notification.permission === 'granted') {
+            handleNotification(tits, bod)
+        } else {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    console.log('Permission granted for notifications.');
+                    handleNotification(tits, bod)
+                }
+            });
+        }
+
+        window.localStorage.setItem("noty",
+            "yes")
+
+    }
 
 }
