@@ -10,6 +10,10 @@ const cancBtn = document.getElementById("canc")//button to cancel recording
 
 const contBtn = document.getElementById("continue")//button to continue the recording
 
+const fily = document.getElementById("fily")//button to choose audio file from filesystem
+
+const file = document.getElementById("file")//input file element
+
 /* function to oversee the recording, processing, playing and sending the audio to the server.
 */
 
@@ -165,6 +169,40 @@ startBtn.addEventListener("click", function() {
     dwl.style.display = "inline-block";
 })
 
+//binding event listener to the file picker button
+
+fily.addEventListener("click", function() {
+    setTimeout(function() {
+        document.getElementById("file").click()
+    }, 300);
+})
+
+//binding event listener to the input file
+
+file.addEventListener("change", function() {
+    if (this.files && this.files[0]) {
+
+        var name = this.files[0].name;
+        var blob = new Blob([this.files[0]], {
+            type: this.files[0].type
+        })
+        var url = URL.createObjectURL(blob)
+
+        var id = "";
+        for (var i = 0; i < 5; i++) {
+            var rand = Math.floor(Math.random() * 9)
+            id += rand;
+        }
+
+        window.blob = blob;
+        window.urli = url;
+        functs.savRecs(id, name)
+
+    }
+})
+
+//setting controls
+
 const setCtrls = () => {
 
     const ply = document.getElementById("ply")//for playing the recordings
@@ -238,33 +276,8 @@ const setCtrls = () => {
                 id += rand;
             }
             var sav = `StarWave_${id}.wav`;
+            functs.savRecs(id, sav)
 
-            const addData = (data) => {
-                const transaction = db.transaction("Records", "readwrite");
-                const store = transaction.objectStore("Records");
-                store.add(data);
-
-                transaction.oncomplete = () => {
-                    console.log("Data added successfully");
-
-                    functs.setNewRec(sav, window.urli, id)
-
-                    const dwl = document.getElementById("dwl")
-                    const dwld = document.getElementById("dwld")
-
-                    dwl.style.display = "none";
-                    dwld.style.display = "inline-block";
-                };
-
-                transaction.onerror = (event) => {
-                    console.error("Transaction error:", event.target.error);
-                };
-            };
-
-            //save record to database
-            addData({
-                id: id, nam: sav, blob: window.blob
-            });
         })
 
     //download the audio stream
@@ -279,12 +292,48 @@ const setCtrls = () => {
 }
 
 const functs = {
+    savRecs(id,
+        sav) {
+        const addData = (data) => {
+            const transaction = db.transaction("Records",
+                "readwrite");
+            const store = transaction.objectStore("Records");
+            store.add(data);
+
+            transaction.oncomplete = () => {
+                console.log("Data added successfully");
+
+                functs.setNewRec(sav,
+                    window.urli,
+                    id)
+
+                const dwl = document.getElementById("dwl")
+                const dwld = document.getElementById("dwld")
+
+                dwl.style.display = "none";
+                dwld.style.display = "inline-block";
+            };
+
+            transaction.onerror = (event) => {
+                console.error("Transaction error:",
+                    event.target.error);
+            };
+        };
+
+        //save record to database
+        addData({
+            id: id,
+            nam: sav,
+            blob: window.blob
+        });
+    },
     setNewRec(nam,
         url,
         id) {
 
+        //sorting out the records
         var roy = window.roy + 1;
-        var elem = `<div id='aud${id}' style='padding: 1vw'> <span style='font-size: 8vw'>&rarr;</span> ${nam} </div> <div id='roy${roy}'></div>`;
+        var elem = `<div id='pad${roy}' style='padding: 1vw; display: flex'> <div id='aud${id}' class='tup'> <span id='pol${id}' style='font-size: 8vw'>&rarr;</span> ${nam} </div> <button id='del${id}' class='del'>delete</button> </div> <div id='roy${roy}'></div>`;
 
         var fog = document.getElementById("loky").innerHTML;
 
@@ -295,15 +344,37 @@ const functs = {
         }
         window.roy = roy;
 
+        //Event listener for playing and deleting records
         var ele = document.getElementById(`aud${id}`)
+        var pol = document.getElementById(`pol${id}`)
+        var del = document.getElementById(`del${id}`)
 
+        //for playing
         ele.addEventListener("click", () => {
+
+            //change color of record name playing
+            if (window.ply == "") {
+                ele.style.color = "#4caf50";
+                pol.style.color = "#4caf50";
+            } else {
+                var tag = window.ply;
+                var tag2 = window.ply2;
+                document.getElementById(tag).style.color = "#fff";
+                document.getElementById(tag2).style.color = "#fff";
+                ele.style.color = "#4caf50";
+                pol.style.color = "#4caf50";
+            }
+            window.ply = `aud${id}`;
+            window.ply2 = `pol${id}`;
+
+            //set src of the audio element and play
             elem = document.getElementById("audy")
             elem.setAttribute("src", url)
 
             const ply = document.getElementById("ply")
             ply.click()
 
+            //display download button when playing
             const dwl = document.getElementById("dwl")
             const dwld = document.getElementById("dwld")
 
@@ -311,12 +382,21 @@ const functs = {
             dwld.style.display = "inline-block";
         })
 
+        //for deleting
+        del.addEventListener("click",
+            () => {
+                setTimeout(function() {
+                    functs.delRec(id, roy)
+                }, 150);
+            })
+
         window.url = url;
         window.nam = nam;
     },
     getRecs() {
         //read data stored in database
-        const transaction = db.transaction("Records", "readonly");
+        const transaction = db.transaction("Records",
+            "readonly");
 
         const store = transaction.objectStore("Records");
 
@@ -332,14 +412,15 @@ const functs = {
                 cursor.continue(); // Move to the next record
             } else {
                 console.log("All data retrieved using cursor");
-                console.log(allData)
 
+                //looping through the array of records
                 allData.forEach(elem => {
 
                     var url = URL.createObjectURL(elem.blob, {
                         type: "audio/wav"
                     })
 
+                    //function to sort out each records
                     functs.setNewRec(elem.nam, url, elem.id)
 
                 })
@@ -349,7 +430,30 @@ const functs = {
         request.onerror = (event) => {
             console.error("Cursor error:", event.target.error);
         };
+    },
+    delRec(id, roy) {
+
+        //deleting record from our database
+        const transaction = db.transaction("Records", "readwrite");
+
+        const store = transaction.objectStore("Records");
+
+        store.delete(id);
+
+        transaction.oncomplete = () => {
+            console.log("Data deleted successfully");
+            document.getElementById(`pad${roy}`).remove()
+        };
+
+        transaction.onerror = (event) => {
+            console.error("Transaction error:", event.target.error);
+        };
     }
+}
+
+const audEnd = () => {
+    var e = document.getElementById("audy")
+    e.currentTime = 0;
 }
 
 window.onload = function() {
@@ -365,6 +469,8 @@ window.onload = function() {
     }
 
     window.roy = 0;
+    window.ply = "";
+    window.ply2 = "";
     setCtrls()
 
     //create an instance of indexedDB database

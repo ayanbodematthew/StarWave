@@ -72,7 +72,7 @@
             border-radius: 1vw;
             width: 100%;
             outline: none;
-            background: #555;
+            background: #444;
             transition: background 0.3s ease;
         }
         input[type="range"]::-webkit-slider-runnable-track {
@@ -230,6 +230,38 @@
             max-height: 80vw;
             overflow: auto;
         }
+        .tup {
+            width: 70%;
+        }
+        .del {
+            padding: 1vw;
+            margin: 0;
+            margin-left: 25vw;
+            font-size: 2.7vw;
+            background: none;
+            color: #ff001e;
+            border: none;
+            border-radius: 1vw;
+            width: 12vw;
+            height: 8vw;
+            text-align: center;
+            font-weight: bolder;
+        }
+        .del:focus {
+            background: #333;
+        }
+        .fily {
+            float: right;
+            font-size: 5vw;
+            padding: 1vw;
+            text-align: center;
+            background: #282828;
+            color: #f90;
+            border-radius: 10vw;
+            width: 10vw;
+            height: 10vw;
+            margin: 0;
+        }
         #start, #stop, #pause, #canc, #continue {
             position: absolute;
             left: 41vw;
@@ -264,7 +296,7 @@
 <body>
 
     <header>
-        <h1> <span class="logo">&#9733</span>StarWave </h1>
+        <h1> <span class="logo">&#9733</span>StarWave <button id="fily" class="fily">&gt;&gt;</button> </h1>
     </header>
 
     <section>
@@ -322,10 +354,11 @@
             <div id="rept" class="rept">
                 00:00
             </div>
-            <audio id="audy" preload="true" src="" hidden></audio>
+            <audio id="audy" preload="true" onended="audEnd()" hidden></audio>
         </div>
     </section>
     <a id="download" hidden>download</a>
+    <input type="file" id="file" accept="audio/*" hidden />
 
     <script src="Audio.js" type="text/javascript" charset="utf-8"></script>
 
