@@ -11,6 +11,8 @@
 
     <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <link rel="manifest" href="./manifest.json" />
 
     <title>StarWave</title>
@@ -88,7 +90,7 @@
             appearance: none;
             width: 15px;
             height: 15px;
-            background: linear-gradient(135deg, #f06, #f90);
+            background: #f06;
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -115,16 +117,19 @@
             transform: scale(1.2);
             /* Enlarge on hover */
         }
+        section {
+            height: 93%;
+            width: 100%;
+        }
         .paste {
-            margin: 5% auto;
-            width: 95%;
-            height: 82%;
+            width: 98%;
+            height: 77%;
             padding: 1vw;
         }
         .cont {
             margin: 5% auto;
             width: 95%;
-            height: 15%;
+            height: 18%;
             border-radius: 2vw;
             text-align: center;
         }
@@ -167,8 +172,8 @@
             padding: 1vw;
             text-align: center;
             font-size: 4vw;
-            color: #f44336;
-            background: #333;
+            color: #f06;
+            background: #282828;
             border-radius: 2vw;
             width: 70%;
         }
@@ -178,194 +183,205 @@
             text-align: center;
             margin: 1.5vw;
             margin-right: 3vw;
-            padding: 1.8vw;
-            border-radius: 3vw;
+            padding: 1vw;
+            border-radius: 8vw;
             background: #333;
-            color: #4caf50;
-            width: 12vw;
+            width: 8vw;
+            height: 8vw;
+            color: #f06;
         }
         .ctrl2 {
             display: none;
             width: 17vw;
         }
         .ctrls:hover, .ctrl2:hover {
-            color: #f44336;
-            border: #f44336 0.01em solid;
+            border: #f90 0.01em solid;
+            color: #333;
         }
-        .logo {
-            font-size: 7vw;
-            padding: 1vw;
+        .ctrls:focus, .ctrl2:focus {
+            background: #f90;
+            i {
+            color: #333;
         }
-        .ads {
-            width: 12vw;
-            height: 12vw;
-            border-radius: 12vw;
-            background-image: linear-gradient(135deg, #f06, #f90);
-            font-size: 4vw;
-            border: #fff 0.01em solid;
-            margin: 5% auto;
-            margin-left: 88%;
-            animation: incred 2s infinite ease-out;
-        }
-        .caty {
-            position: absolute;
-            padding: 1vw;
-            margin: 2vw;
-            border-radius: 3vw;
-            background: rgba(0, 0, 0, 0.3);
-            width: 89%;
-            font-size: 3vw;
-        }
-        .catag {
-            padding: 2vw;
-            font-size: 3.5vw;
-            font-weight: bold;
-            background: #f44336;
-            border-top-left-radius: 2vw;
-            border-top-right-radius: 2vw;
-        }
-        .loky {
-            margin: 1vw;
-            padding: 1vw;
-            border-top: #fff 0.01em solid;
-            border-bottom: #fff 0.01em solid;
-            min-height: 15vw;
-            max-height: 80vw;
-            overflow: auto;
-        }
-        .tup {
-            width: 55%;
-            font-size: 2.7vw;
-            padding: 2vw;
-        }
-        .del {
-            padding: 1vw;
-            margin: 0;
-            margin-left: 20vw;
-            font-size: 2.7vw;
-            background: none;
-            color: #ff001e;
-            border: none;
-            border-radius: 1vw;
-            width: 12vw;
-            height: 8vw;
-            text-align: center;
-            font-weight: bolder;
-        }
-        .del:focus {
-            background: #333;
-        }
-        .fily {
-            float: right;
-            font-size: 5vw;
-            padding: 1vw;
-            text-align: center;
-            background: #282828;
-            color: #f90;
-            border-radius: 10vw;
-            width: 10vw;
-            height: 10vw;
-            margin: 0;
-        }
-        #start, #stop, #pause, #canc, #continue {
-            position: absolute;
-            left: 41vw;
-        }
-        #pause, #stop, #canc, #continue {
-            visibility: hidden;
-        }
-        #pause, #continue {
-            left: 26vw;
-            font-size: 4vw;
-        }
-        #canc {
-            left: 56vw;
-        }
+    }
+    .ctrls i, .ctrl2 i {
+        color: #f06;
+    }
+    .logo {
+        font-size: 7vw;
+        padding: 1vw;
+    }
+    .ads {
+        width: 12vw;
+        height: 12vw;
+        border-radius: 12vw;
+        background-image: linear-gradient(135deg, #f06, #f90);
+        font-size: 4vw;
+        border: #fff 0.01em solid;
+        margin: 5% auto;
+        margin-left: 88%;
+        animation: incred 2s infinite ease-out;
+    }
+    .caty {
+        position: absolute;
+        padding: 1vw;
+        margin: 2vw;
+        border-radius: 3vw;
+        background: rgba(0, 0, 0, 0.3);
+        width: 92%;
+        font-size: 3vw;
+    }
+    .catag {
+        padding: 2vw;
+        font-size: 3.5vw;
+        font-weight: bold;
+        background: #f44336;
+        border-top-left-radius: 2vw;
+        border-top-right-radius: 2vw;
+    }
+    .loky {
+        margin: 1vw;
+        padding: 1vw;
+        border-top: #fff 0.01em solid;
+        border-bottom: #fff 0.01em solid;
+        min-height: 25vw;
+        max-height: 100vw;
+        overflow: auto;
+    }
+    .tup {
+        width: 55%;
+        font-size: 2.7vw;
+        padding: 2vw;
+    }
+    .del {
+        padding: 1vw;
+        margin: 0;
+        margin-left: 20vw;
+        font-size: 2.7vw;
+        background: none;
+        color: #ff001e;
+        border: none;
+        border-radius: 1vw;
+        width: 12vw;
+        height: 8vw;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .del:focus {
+        background: #333;
+    }
+    .fily {
+        float: right;
+        font-size: 5vw;
+        padding: 1vw;
+        text-align: center;
+        background: #282828;
+        color: #f90;
+        border-radius: 10vw;
+        width: 10vw;
+        height: 10vw;
+        margin: 0;
+    }
+    #start, #stop, #pause, #canc, #continue {
+        position: absolute;
+        left: 41vw;
+    }
+    #pause, #stop, #canc, #continue {
+        visibility: hidden;
+    }
+    #pause, #continue {
+        left: 26vw;
+        font-size: 4.5vw;
+    }
+    #canc {
+        left: 56vw;
+        font-size: 6.5vw;
+    }
+    #start i, #stop i {
+        color: #f06;
+    }
 @keyframes rotate {
-            to {
-                transform: rotateZ(360deg);
-            }
+        to {
+            transform: rotateZ(360deg);
         }
+    }
 @keyframes incred {
-            50% {
-                transform: scale(0.5);
-            }
-            100% {
-                transform: scale(1.0);
-            }
+        50% {
+            transform: scale(0.5);
         }
-    </style>
+        100% {
+            transform: scale(1.0);
+        }
+    }
+</style>
 
 </head>
 
 <body>
 
-    <header>
-        <h1> <span class="logo">&#9733</span>StarWave <button id="fily" class="fily">&gt;&gt;</button> </h1>
-    </header>
+<header>
+<h1> <span class="logo">&#9733</span>StarWave <button id="fily" class="fily">&gt;&gt;</button> </h1>
+</header>
 
-    <section>
-        <div class="paste">
-            <div class="caty">
-                <div class="catag">
-                    My Records
-                </div>
-                <br>
-                <div id="loky" class="loky">
-                    No Records
-                </div>
-            </div>
-            <div class="sec1">
-                <div class="sec2">
-                    <div class="sec3">
-                        <button class="sec4">
-                            <span>&#9733</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <button class="ads">
-                <a id="ads" href="https://luglawhaulsano.net/4/8644003" target="_blank">&hearts;</a>
-            </button>
-        </div>
-    </section>
+<section>
+<div class="paste">
+<div class="caty">
+<div class="catag">
+My Records
+</div>
+<br>
+<div id="loky" class="loky">
+No Records
+</div>
+</div>
+<div class="sec1">
+<div class="sec2">
+<div class="sec3">
+<button class="sec4">
+<span>&#9733</span>
+</button>
+</div>
+</div>
+</div>
+<br>
+<button class="ads">
+<a id="ads" href="https://luglawhaulsano.net/4/8644003" target="_blank">&hearts;</a>
+</button>
+</div>
+<div class="cont">
+<button id="ply" class="ctrls">
+<i class="fa fa-play"></i>
+</button>
+<button id="pus" class="ctrls">
+||
+</button>
+<button id="stp" class="ctrls">
+<i class="fa fa-stop"></i>
+</button>
+<button id="dwl" class="ctrls">
+<i class="fa fa-save"></i>
+</button>
+<button id="dwld" class="ctrl2">
+<i class="fa fa-download"></i>
+</button>
+<input type="range" name="slider" id="slider" min="0" max="100" value="0" />
+<br>
+<button id="canc"> &times; </button>
+<button id="stop"> <i class="fa fa-square-o"></i> </button>
+<button id="start"> <i class="fa fa-circle"></i> </button>
+<button id="pause"> || </button>
+<button id="continue"> || </button>
+<br><br><br>
+<div id="rept" class="rept">
+00:00
+</div>
+<audio id="audy" preload="true" onended="audEnd()" hidden></audio>
+</div>
+</section>
+<a id="download" hidden>download</a>
+<input type="file" id="file" accept="audio/*" hidden />
 
-    <section>
-        <div class="cont">
-            <div id="ply" class="ctrls">
-                play
-            </div>
-            <div id="pus" class="ctrls">
-                pause
-            </div>
-            <div id="stp" class="ctrls">
-                stop
-            </div>
-            <div id="dwl" class="ctrls">
-                save
-            </div>
-            <div id="dwld" class="ctrl2">
-                download
-            </div>
-            <input type="range" name="slider" id="slider" min="0" max="100" value="0" />
-            <br>
-            <button id="canc"> &times; </button>
-            <button id="stop"> &lt;&gt; </button>
-            <button id="start"> &lt;&gt; </button>
-            <button id="pause"> || </button>
-            <button id="continue"> || </button>
-            <br><br><br>
-            <div id="rept" class="rept">
-                00:00
-            </div>
-            <audio id="audy" preload="true" onended="audEnd()" hidden></audio>
-        </div>
-    </section>
-    <a id="download" hidden>download</a>
-    <input type="file" id="file" accept="audio/*" hidden />
-
-    <script src="Audio.js" type="text/javascript" charset="utf-8"></script>
+<script src="Audio.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
 

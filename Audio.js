@@ -103,8 +103,8 @@ const handlesuccess = function(stream) {
             stopBtn.disabled = true;
             cancBtn.disabled = true;
 
-            contBtn.style.color = "#f44336";
-            contBtn.style.border = " #f44336 0.01em solid";
+            contBtn.style.color = "#f06";
+            contBtn.style.border = " #f06 0.01em solid";
 
             pauseBtn.style.visibility = "hidden";
             contBtn.style.visibility = "visible";
@@ -115,8 +115,8 @@ const handlesuccess = function(stream) {
 
     contBtn.addEventListener("click",
         function() {
-            stopBtn.style.color = "#f44336";
-            stopBtn.style.border = " #f44336 0.01em solid";
+            stopBtn.style.color = "#f06";
+            stopBtn.style.border = " #f06 0.01em solid";
             stopBtn.classList.add("animate")
 
             stopBtn.disabled = false;
@@ -158,8 +158,8 @@ startBtn.addEventListener("click", function() {
     //create access to media element using navigator.
     //only audio is being used here.
 
-    stopBtn.style.color = "#f44336";
-    stopBtn.style.border = "#f44336 0.01em solid";
+    stopBtn.style.color = "#f06";
+    stopBtn.style.border = "#f06 0.01em solid";
     stopBtn.classList.add("animate")
 
     startBtn.style.visibility = "hidden";
@@ -232,6 +232,13 @@ const setCtrls = () => {
         function() {
 
             var audy = document.getElementById("audy")
+
+            var url = audy.getAttribute("src")
+            if (!url) {
+                console.log("no url")
+                return;
+            }
+
             var slider = document.getElementById("slider")
 
             function timeUpdate() {
@@ -269,18 +276,38 @@ const setCtrls = () => {
 
     pus.addEventListener("click",
         function() {
+            var audy = document.getElementById("audy")
+
+            var url = audy.getAttribute("src")
+            if (!url) {
+                console.log("no url")
+                return;
+            }
             elem.pause()
         })
 
     stp.addEventListener("click",
         function() {
+            var audy = document.getElementById("audy")
+
+            var url = audy.getAttribute("src")
+            if (!url) {
+                console.log("no url")
+                return;
+            }
             elem.pause()
             elem.currentTime = 0;
         })
 
     dwl.addEventListener("click",
         function() {
+            var audy = document.getElementById("audy")
 
+            var url = audy.getAttribute("src")
+            if (!url) {
+                console.log("no url")
+                return;
+            }
             var id = "";
             for (var i = 0; i < 5; i++) {
                 var rand = Math.floor(Math.random() * 9)
@@ -288,12 +315,18 @@ const setCtrls = () => {
             }
             var sav = `StarWave_${id}.wav`;
             functs.savRecs(id, sav)
-
         })
 
     //download the audio stream
     dwld.addEventListener("click",
         function() {
+            var audy = document.getElementById("audy")
+
+            var url = audy.getAttribute("src")
+            if (!url) {
+                console.log("no url")
+                return;
+            }
             var trigger = document.getElementById("download")
             trigger.href = window.url;
             trigger.download = window.nam;
@@ -330,6 +363,11 @@ const functs = {
                     event.target.error);
             };
         };
+
+        if (!window.blob) {
+            console.log("no blob")
+            return;
+        }
 
         //save record to database
         addData({
