@@ -402,7 +402,7 @@ const functs = {
 
             //change color of record name playing
             if (window.ply == "") {
-                ele.style.color = "#4caf50";
+                ele.style.color = "#f06";
             } else {
                 var tag = window.ply;
                 document.getElementById(tag).style.color = "#fff";
