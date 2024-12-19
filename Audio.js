@@ -406,7 +406,7 @@ const functs = {
             } else {
                 var tag = window.ply;
                 document.getElementById(tag).style.color = "#fff";
-                ele.style.color = "#4caf50";
+                ele.style.color = "#f06";
             }
             window.ply = `aud${id}`;
 
@@ -575,3 +575,125 @@ window.onload = function() {
     }
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const steps = document.querySelectorAll(".highlight");
+    let currentStep = 0;
+    let Id;
+    let prev;
+
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.classList.toggle("active", i === index);
+        });
+
+        if (index == 0) {
+
+            Id = document.getElementById("fily")
+            Id.style.backgroundColor = "#777";
+            window.paint = "fily";
+
+        } else if (index == 1) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#282828";
+
+            Id = document.getElementById("start")
+            Id.style.backgroundColor = "#777";
+            window.paint = "start";
+
+        } else if (index == 2) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#333";
+            prev.style.color = "#f90";
+
+            Id = document.getElementById("ply")
+            Id.style.backgroundColor = "#777";
+            window.paint = "ply";
+
+        } else if (index == 3) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#333";
+
+            Id = document.getElementById("pus")
+            Id.style.backgroundColor = "#777";
+            window.paint = "pus";
+
+        } else if (index == 4) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#333";
+
+            Id = document.getElementById("stp")
+            Id.style.backgroundColor = "#777";
+            window.paint = "stp";
+
+        } else if (index == 5) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#333";
+
+            Id = document.getElementById("dwl")
+            Id.style.backgroundColor = "#777";
+            window.paint = "dwl";
+
+        } else if (index == 6) {
+
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "#333";
+
+            Id = document.getElementById("loky")
+            Id.style.backgroundColor = "#777";
+            window.paint = "loky";
+        }
+
+        var dec = document.querySelector('#one')
+        dec.style.left = "27%";
+        dec.style.top = "78%";
+
+        var dec = document.querySelector('#two')
+        dec.style.left = "55%";
+        dec.style.top = "80%";
+
+        var dec = document.querySelector('#three')
+        dec.style.left = "65%";
+        dec.style.top = "80%";
+
+        var dec = document.querySelector('#four')
+        dec.style.left = "77%";
+        dec.style.top = "80%";
+
+        var dec = document.querySelector('#five')
+        dec.style.left = "45%";
+        dec.style.top = "80%";
+
+        var dec = document.querySelector('#six')
+        dec.style.left = "50%";
+        dec.style.top = "175px";
+
+        document.getElementById("mod").style.display = "block";
+
+        document.getElementById("nextBtn").style.display = index < steps.length - 1 ? "block": "none";
+        document.getElementById("finishBtn").style.display = index === steps.length - 1 ? "block": "none";
+    }
+
+    document.getElementById("nextBtn").addEventListener("click",
+        () => {
+            currentStep++;
+            if (currentStep < steps.length) showStep(currentStep);
+        });
+
+    document.getElementById("finishBtn").addEventListener("click",
+        () => {
+            steps.forEach(step => step.classList.remove("active"));
+            localStorage.setItem("visited", "true");
+            document.getElementById("mod").style.display = "none";
+            prev = document.getElementById(window.paint)
+            prev.style.backgroundColor = "transparent";
+            window.paint = "";
+        });
+
+    if (!localStorage.getItem("visited")) showStep(currentStep);
+});
