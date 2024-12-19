@@ -246,8 +246,8 @@
         padding: 1vw;
         border-top: #fff 0.01em solid;
         border-bottom: #fff 0.01em solid;
-        min-height: 25vw;
-        max-height: 100vw;
+        min-height: 15vw;
+        max-height: 120vw;
         overflow: auto;
     }
     .tup {
@@ -290,7 +290,7 @@
         width: 100%;
         height: 100%;
         z-index: 10;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.5);
     }
     .tooltip {
         display: none;
@@ -340,6 +340,12 @@
     #start i, #stop i {
         color: #f06;
     }
+    #zero {
+        margin: 10% auto;
+        font-size: 3vw;
+        left: 50%;
+        text-align: center;
+    }
 @keyframes fadeIn {
         from {
             opacity: 0;
@@ -368,6 +374,12 @@
 <body>
 
 <nav id="mod" class="modal">
+<div class="highlight">
+<span id="zero" class="tooltip">
+<span style="font-size: 12vw">&#9733</span> <br><br>
+<b> Hello there, it's good to have you here on StatWave. <br> For your ease of access, let's go through some functionalities. <br> Click on <strong>next</strong> below to continue </b>
+</span>
+</div>
 <div class="highlight">
 <span class="tooltip">
 <b>User Guide</b> <br><br>

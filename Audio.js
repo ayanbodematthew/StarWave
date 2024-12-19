@@ -564,13 +564,13 @@ document.addEventListener("DOMContentLoaded", () => {
             step.classList.toggle("active", i === index);
         });
 
-        if (index == 0) {
+        if (index == 1) {
 
             Id = document.getElementById("fily")
             Id.style.backgroundColor = "#999";
             window.paint = "fily";
 
-        } else if (index == 1) {
+        } else if (index == 2) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#282828";
@@ -579,7 +579,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Id.style.backgroundColor = "#999";
             window.paint = "start";
 
-        } else if (index == 2) {
+        } else if (index == 3) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#333";
@@ -589,7 +589,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Id.style.backgroundColor = "#999";
             window.paint = "ply";
 
-        } else if (index == 3) {
+        } else if (index == 4) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#333";
@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Id.style.backgroundColor = "#999";
             window.paint = "pus";
 
-        } else if (index == 4) {
+        } else if (index == 5) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#333";
@@ -607,7 +607,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Id.style.backgroundColor = "#999";
             window.paint = "stp";
 
-        } else if (index == 5) {
+        } else if (index == 6) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#333";
@@ -616,7 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Id.style.backgroundColor = "#999";
             window.paint = "dwl";
 
-        } else if (index == 6) {
+        } else if (index == 7) {
 
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "#333";
@@ -628,23 +628,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         var dec = document.querySelector('#one')
         dec.style.left = "27%";
-        dec.style.top = "78%";
+        dec.style.top = "82%";
 
         var dec = document.querySelector('#two')
         dec.style.left = "55%";
-        dec.style.top = "80%";
+        dec.style.top = "82%";
 
         var dec = document.querySelector('#three')
         dec.style.left = "65%";
-        dec.style.top = "80%";
+        dec.style.top = "82%";
 
         var dec = document.querySelector('#four')
         dec.style.left = "77%";
-        dec.style.top = "80%";
+        dec.style.top = "82%";
 
         var dec = document.querySelector('#five')
         dec.style.left = "45%";
-        dec.style.top = "80%";
+        dec.style.top = "82%";
 
         var dec = document.querySelector('#six')
         dec.style.left = "50%";
@@ -690,9 +690,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
             }
-
-            window.localStorage.setItem("noty",
-                "yes")
 
         });
 
