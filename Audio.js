@@ -567,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (index == 0) {
 
             Id = document.getElementById("fily")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "fily";
 
         } else if (index == 1) {
@@ -576,7 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.backgroundColor = "#282828";
 
             Id = document.getElementById("start")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "start";
 
         } else if (index == 2) {
@@ -586,7 +586,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.color = "#f90";
 
             Id = document.getElementById("ply")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "ply";
 
         } else if (index == 3) {
@@ -595,7 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.backgroundColor = "#333";
 
             Id = document.getElementById("pus")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "pus";
 
         } else if (index == 4) {
@@ -604,7 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.backgroundColor = "#333";
 
             Id = document.getElementById("stp")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "stp";
 
         } else if (index == 5) {
@@ -613,7 +613,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.backgroundColor = "#333";
 
             Id = document.getElementById("dwl")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "dwl";
 
         } else if (index == 6) {
@@ -622,7 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prev.style.backgroundColor = "#333";
 
             Id = document.getElementById("loky")
-            Id.style.backgroundColor = "#777";
+            Id.style.backgroundColor = "#999";
             window.paint = "loky";
         }
 
@@ -664,36 +664,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("finishBtn").addEventListener("click",
         () => {
+
             steps.forEach(step => step.classList.remove("active"));
+
             localStorage.setItem("visited", "true");
+
             document.getElementById("mod").style.display = "none";
+
             prev = document.getElementById(window.paint)
+
             prev.style.backgroundColor = "transparent";
+
             window.paint = "";
 
-            const noty = window.localStorage.getItem("noty")
+            const tits = "Welcome Message";
+            const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
 
-    if (noty !== "yes") {
+            if (Notification.permission === 'granted') {
+                handleNotification(tits, bod)
+            } else {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Permission granted for notifications.');
+                        handleNotification(tits, bod)
+                    }
+                });
+            }
 
-        const tits = "Welcome Message";
-        const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+            window.localStorage.setItem("noty",
+                "yes")
 
-        if (Notification.permission === 'granted') {
-            handleNotification(tits, bod)
-        } else {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    console.log('Permission granted for notifications.');
-                    handleNotification(tits, bod)
-                }
-            });
-        }
-
-        window.localStorage.setItem("noty",
-            "yes")
-
-    }
-            
         });
 
     if (!localStorage.getItem("visited")) showStep(currentStep);

@@ -20,9 +20,10 @@
     <style type="text/css" media="all">
         html {
             width: 100vw;
-            height: 92vh;
+            height: 100vh;
         }
         body {
+            position: relative;
             width: 100%;
             height: 100%;
             padding: 0;
@@ -46,6 +47,7 @@
         header {
             background: linear-gradient(135deg, #f06, #f90);
             padding: 1vw;
+            height: 7%;
         }
         header h1 {
             font-size: 5vw;
@@ -118,7 +120,7 @@
             /* Enlarge on hover */
         }
         section {
-            height: 93%;
+            height: 90%;
             width: 100%;
         }
         .paste {
@@ -184,10 +186,10 @@
             margin: 1.5vw;
             margin-right: 3vw;
             padding: 1vw;
-            border-radius: 8vw;
+            border-radius: 7vw;
             background: #333;
-            width: 8vw;
-            height: 8vw;
+            width: 7vw;
+            height: 7vw;
             color: #f06;
         }
         .ctrl2 {
@@ -201,285 +203,285 @@
         .ctrls:focus, .ctrl2:focus {
             background: #f90;
             i {
-              color: #333;
-            }
+            color: #333;
         }
-        .ctrls i, .ctrl2 i {
-            color: #f06;
+    }
+    .ctrls i, .ctrl2 i {
+        color: #f06;
+    }
+    .logo {
+        font-size: 7vw;
+        padding: 1vw;
+    }
+    .ads {
+        width: 12vw;
+        height: 12vw;
+        border-radius: 12vw;
+        background-image: linear-gradient(135deg, #f06, #f90);
+        font-size: 4vw;
+        border: #fff 0.01em solid;
+        margin: 5% auto;
+        margin-left: 88%;
+        animation: incred 2s infinite ease-out;
+    }
+    .caty {
+        position: absolute;
+        padding: 1vw;
+        margin: 2vw;
+        border-radius: 3vw;
+        background: rgba(0, 0, 0, 0.3);
+        width: 92%;
+        font-size: 3vw;
+    }
+    .catag {
+        padding: 2vw;
+        font-size: 3.5vw;
+        font-weight: bold;
+        background: #f44336;
+        border-top-left-radius: 2vw;
+        border-top-right-radius: 2vw;
+    }
+    .loky {
+        margin: 1vw;
+        padding: 1vw;
+        border-top: #fff 0.01em solid;
+        border-bottom: #fff 0.01em solid;
+        min-height: 25vw;
+        max-height: 100vw;
+        overflow: auto;
+    }
+    .tup {
+        width: 55%;
+        font-size: 2.7vw;
+        padding: 2vw;
+    }
+    .del {
+        padding: 1vw;
+        margin: 0;
+        margin-left: 20vw;
+        font-size: 2.7vw;
+        background: none;
+        color: #ff001e;
+        border: none;
+        border-radius: 1vw;
+        width: 12vw;
+        height: 8vw;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .del:focus {
+        background: #333;
+    }
+    .fily {
+        float: right;
+        font-size: 5vw;
+        padding: 1vw;
+        text-align: center;
+        background: #282828;
+        color: #f90;
+        border-radius: 10vw;
+        width: 10vw;
+        height: 10vw;
+        margin: 0;
+    }
+    .modal {
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .tooltip {
+        display: none;
+        position: absolute;
+        top: 30px;
+        left: 58%;
+        transform: translateX(-50%);
+        padding: 2vw;
+        background: linear-gradient(135deg, #f06, #f90);
+        color: #fff;
+        border-radius: 5px;
+        border: #fff 0.01em solid;
+        white-space: nowrap;
+        font-size: 3vw;
+    }
+    .highlight.active .tooltip {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    .vavy {
+        position: absolute;
+        font-size: 3vw;
+        padding: 1vw;
+        width: 15vw;
+        height: 8vw;
+        border-radius: 3vw;
+        background: linear-gradient(135deg, #f06, #f90);
+        bottom: 5vw;
+        left: 80%;
+        border: #fff 0.01em solid;
+    }
+    #start, #stop, #pause, #canc, #continue {
+        position: absolute;
+        left: 41vw;
+    }
+    #pause, #stop, #canc, #continue {
+        visibility: hidden;
+    }
+    #pause, #continue {
+        left: 26vw;
+        font-size: 4.5vw;
+    }
+    #canc {
+        left: 56vw;
+        font-size: 6.5vw;
+    }
+    #start i, #stop i {
+        color: #f06;
+    }
+@keyframes fadeIn {
+        from {
+            opacity: 0;
         }
-        .logo {
-            font-size: 7vw;
-            padding: 1vw;
+        to {
+            opacity: 1;
         }
-        .ads {
-            width: 12vw;
-            height: 12vw;
-            border-radius: 12vw;
-            background-image: linear-gradient(135deg, #f06, #f90);
-            font-size: 4vw;
-            border: #fff 0.01em solid;
-            margin: 5% auto;
-            margin-left: 88%;
-            animation: incred 2s infinite ease-out;
-        }
-        .caty {
-            position: absolute;
-            padding: 1vw;
-            margin: 2vw;
-            border-radius: 3vw;
-            background: rgba(0, 0, 0, 0.3);
-            width: 92%;
-            font-size: 3vw;
-        }
-        .catag {
-            padding: 2vw;
-            font-size: 3.5vw;
-            font-weight: bold;
-            background: #f44336;
-            border-top-left-radius: 2vw;
-            border-top-right-radius: 2vw;
-        }
-        .loky {
-            margin: 1vw;
-            padding: 1vw;
-            border-top: #fff 0.01em solid;
-            border-bottom: #fff 0.01em solid;
-            min-height: 25vw;
-            max-height: 100vw;
-            overflow: auto;
-        }
-        .tup {
-            width: 55%;
-            font-size: 2.7vw;
-            padding: 2vw;
-        }
-        .del {
-            padding: 1vw;
-            margin: 0;
-            margin-left: 20vw;
-            font-size: 2.7vw;
-            background: none;
-            color: #ff001e;
-            border: none;
-            border-radius: 1vw;
-            width: 12vw;
-            height: 8vw;
-            text-align: center;
-            font-weight: bolder;
-        }
-        .del:focus {
-            background: #333;
-        }
-        .fily {
-            float: right;
-            font-size: 5vw;
-            padding: 1vw;
-            text-align: center;
-            background: #282828;
-            color: #f90;
-            border-radius: 10vw;
-            width: 10vw;
-            height: 10vw;
-            margin: 0;
-        }
-        .modal {
-            display: none;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        .tooltip {
-            display: none;
-            position: absolute;
-            top: 30px;
-            left: 58%;
-            transform: translateX(-50%);
-            padding: 2vw;
-            background: linear-gradient(135deg, #f06, #f90);
-            color: #fff;
-            border-radius: 5px;
-            border: #fff 0.01em solid;
-            white-space: nowrap;
-            font-size: 3vw;
-        }
-        .highlight.active .tooltip {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .vavy {
-            position: absolute;
-            font-size: 3vw;
-            padding: 1vw;
-            width: 15vw;
-            height: 8vw;
-            border-radius: 3vw;
-            background: linear-gradient(135deg, #f06, #f90);
-            bottom: 5vw;
-            left: 80%;
-            border: #fff 0.01em solid;
-        }
-        #start, #stop, #pause, #canc, #continue {
-            position: absolute;
-            left: 41vw;
-        }
-        #pause, #stop, #canc, #continue {
-            visibility: hidden;
-        }
-        #pause, #continue {
-            left: 26vw;
-            font-size: 4.5vw;
-        }
-        #canc {
-            left: 56vw;
-            font-size: 6.5vw;
-        }
-        #start i, #stop i {
-            color: #f06;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+    }
 @keyframes rotate {
-            to {
-                transform: rotateZ(360deg);
-            }
+        to {
+            transform: rotateZ(360deg);
         }
+    }
 @keyframes incred {
-            50% {
-                transform: scale(0.5);
-            }
-            100% {
-                transform: scale(1.0);
-            }
+        50% {
+            transform: scale(0.5);
         }
-    </style>
+        100% {
+            transform: scale(1.0);
+        }
+    }
+</style>
 
 </head>
 
 <body>
-    
-    <nav id="mod" class="modal">
-        <div class="highlight">
-            <span class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to select audio file from file system
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="one" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to start audio recording
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="two" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to play: <br> <ol>
-                <li>audio recording</li>
-                <li> saved records and files</li>
-                </ol>
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="three" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to pause audio player
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="four" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to stop audio player
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="five" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to save audio recording
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="six" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Your files and saved recordings will appear here <br> Click on a record to play it
-            </span>
-        </div>
-        <button class="vavy" id="nextBtn">next</button>
-        <button class="vavy" id="finishBtn">finish</button>
-    </nav>
 
-    <header>
-        <h1> <span class="logo">&#9733</span>StarWave <button id="fily" class="fily">
-            &gt;&gt;</button> 
-        </h1>
-    </header>
+<nav id="mod" class="modal">
+<div class="highlight">
+<span class="tooltip">
+<b>User Guide</b> <br><br>
+Click to select audio file from file system
+</span>
+</div>
+<div class="highlight">
+<span id="one" class="tooltip">
+<b>User Guide</b> <br><br>
+Click to start audio recording
+</span>
+</div>
+<div class="highlight">
+<span id="two" class="tooltip">
+<b>User Guide</b> <br><br>
+Click to play: <br> <ol>
+<li>audio recording</li>
+<li> saved records and files</li>
+</ol>
+</span>
+</div>
+<div class="highlight">
+<span id="three" class="tooltip">
+<b>User Guide</b> <br><br>
+Click to pause audio player
+</span>
+</div>
+<div class="highlight">
+<span id="four" class="tooltip">
+<b>User Guide</b> <br><br>
+Click to stop audio player
+</span>
+</div>
+<div class="highlight">
+<span id="five" class="tooltip">
+<b>User Guide</b> <br><br>
+Click to save audio recording
+</span>
+</div>
+<div class="highlight">
+<span id="six" class="tooltip">
+<b>User Guide</b> <br><br>
+Your files and saved recordings will appear here <br> Click on a record to play it
+</span>
+</div>
+<button class="vavy" id="nextBtn">next</button>
+<button class="vavy" id="finishBtn">finish</button>
+</nav>
 
-    <section>
-        <div class="paste">
-            <div class="caty">
-                <div class="catag">
-                    My Records
-                </div>
-                <br>
-                <div id="loky" class="loky">
-                    No Records
-                </div>
-            </div>
-            <div class="sec1">
-                <div class="sec2">
-                    <div class="sec3">
-                        <button class="sec4">
-                            <span>&#9733</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <button class="ads">
-                <a id="ads" href="https://luglawhaulsano.net/4/8644003" target="_blank">&hearts;</a>
-            </button>
-        </div>
-        <div class="cont">
-            <button id="ply" class="ctrls">
-                <i id="plx" class="fa fa-play"></i>
-            </button>
-            <button id="pus" class="ctrls">
-                ||
-            </button>
-            <button id="stp" class="ctrls">
-                <i class="fa fa-stop"></i>
-            </button>
-            <button id="dwl" class="ctrls">
-                <i class="fa fa-save"></i>
-            </button>
-            <button id="dwld" class="ctrl2">
-                <i class="fa fa-download"></i>
-            </button>
-            <input type="range" name="slider" id="slider" min="0" max="100" value="0" />
-            <br>
-            <button id="canc"> &times; </button>
-            <button id="stop"> <i class="fa fa-square-o"></i> </button>
-            <button id="start"> <i class="fa fa-circle"></i> </button>
-            <button id="pause"> || </button>
-            <button id="continue"> || </button>
-            <br><br><br>
-            <div id="rept" class="rept">
-                00:00
-            </div>
-            <audio id="audy" preload="true" onended="audEnd()" hidden></audio>
-        </div>
-    </section>
-    <a id="download" hidden>download</a>
-    <input type="file" id="file" accept="audio/*" hidden />
+<header>
+<h1> <span class="logo">&#9733</span>StarWave <button id="fily" class="fily">
+&gt;&gt;</button>
+</h1>
+</header>
 
-    <script src="Audio.js" type="text/javascript" charset="utf-8"></script>
+<section>
+<div class="paste">
+<div class="caty">
+<div class="catag">
+My Records
+</div>
+<br>
+<div id="loky" class="loky">
+No Records
+</div>
+</div>
+<div class="sec1">
+<div class="sec2">
+<div class="sec3">
+<button class="sec4">
+<span>&#9733</span>
+</button>
+</div>
+</div>
+</div>
+<br>
+<button class="ads">
+<a id="ads" href="https://luglawhaulsano.net/4/8644003" target="_blank">&hearts;</a>
+</button>
+</div>
+<div class="cont">
+<button id="ply" class="ctrls">
+<i id="plx" class="fa fa-play"></i>
+</button>
+<button id="pus" class="ctrls">
+||
+</button>
+<button id="stp" class="ctrls">
+<i class="fa fa-stop"></i>
+</button>
+<button id="dwl" class="ctrls">
+<i class="fa fa-save"></i>
+</button>
+<button id="dwld" class="ctrl2">
+<i class="fa fa-download"></i>
+</button>
+<input type="range" name="slider" id="slider" min="0" max="100" value="0" />
+<br>
+<button id="canc"> &times; </button>
+<button id="stop"> <i class="fa fa-square-o"></i> </button>
+<button id="start"> <i class="fa fa-circle"></i> </button>
+<button id="pause"> || </button>
+<button id="continue"> || </button>
+<br><br><br>
+<div id="rept" class="rept">
+00:00
+</div>
+<audio id="audy" preload="true" onended="audEnd()" hidden></audio>
+</div>
+</section>
+<a id="download" hidden>download</a>
+<input type="file" id="file" accept="audio/*" hidden />
+
+<script src="Audio.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
 
