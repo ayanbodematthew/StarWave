@@ -551,29 +551,6 @@ window.onload = function() {
         console.error("Database error:", event.target.error);
     };
 
-    const noty = window.localStorage.getItem("noty")
-
-    if (noty !== "yes") {
-
-        const tits = "Welcome Message";
-        const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
-
-        if (Notification.permission === 'granted') {
-            handleNotification(tits, bod)
-        } else {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    console.log('Permission granted for notifications.');
-                    handleNotification(tits, bod)
-                }
-            });
-        }
-
-        window.localStorage.setItem("noty",
-            "yes")
-
-    }
-
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -693,6 +670,30 @@ document.addEventListener("DOMContentLoaded", () => {
             prev = document.getElementById(window.paint)
             prev.style.backgroundColor = "transparent";
             window.paint = "";
+
+            const noty = window.localStorage.getItem("noty")
+
+    if (noty !== "yes") {
+
+        const tits = "Welcome Message";
+        const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+
+        if (Notification.permission === 'granted') {
+            handleNotification(tits, bod)
+        } else {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    console.log('Permission granted for notifications.');
+                    handleNotification(tits, bod)
+                }
+            });
+        }
+
+        window.localStorage.setItem("noty",
+            "yes")
+
+    }
+            
         });
 
     if (!localStorage.getItem("visited")) showStep(currentStep);
