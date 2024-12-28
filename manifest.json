@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "start_url": "./Audio.html",
     "scope": "./",
-    "description": "A media audio recorder and audio player",
+    "description": "watch youTube videos, media audio recorder and audio player",
     "display": "fullscreen",
     "display_override": [
         "fullscreen",
@@ -17,8 +17,8 @@
     "background_color": "#191919",
     "theme_color": "#191919",
     "icons": [{
-        "src": "./Screenshot_20241216-125252_2.png",
-        "sizes": "544x544",
+        "src": "./1000025725.png",
+        "sizes": "575x575",
         "purpose": "any"
     }],
     "offline_access": true,
