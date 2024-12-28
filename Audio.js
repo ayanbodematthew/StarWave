@@ -1,85 +1,254 @@
 //getting our required elements
 
-const startBtn = document.getElementById("start")//button to start recording
+const recky = document.getElementById("recky")//recorder feature container
 
-const stopBtn = document.getElementById("stop")//button to stop recording
+const fily = document.getElementById("fily")//file upload and playing container
 
-const pauseBtn = document.getElementById("pause")//button to pause recording
-
-const cancBtn = document.getElementById("canc")//button to cancel recording
-
-const contBtn = document.getElementById("continue")//button to continue the recording
-
-const rept = document.getElementById("rept")//container for recording timeline
-
-const fily = document.getElementById("fily")//button to choose audio file from filesystem
+const zap = document.getElementById("musy")//home music container
 
 const file = document.getElementById("file")//input file element
 
-/* function to oversee the recording, processing, playing and sending the audio to the server.
-*/
-
 var db;
 
-const handlesuccess = function(stream) {
+var mediaRec;
 
+recky.addEventListener("click", function() {
+    setTimeout(function() {
+
+        var mod = document.getElementById("mod")
+
+        if (window.caty == "rec_pad") {
+            mod.style.display = "none";
+            return;
+        }
+
+        var mus = document.getElementById(window.caty)
+        var player = document.getElementById("rec_pad")
+
+        mod.style.display = "none";
+        mus.style.display = "none";
+        player.style.display = "block";
+
+        window.caty = "rec_pad";
+        set_recorder()
+
+    },
+        300);
+})
+
+zap.addEventListener("click", function() {
+    setTimeout(function() {
+
+        var mod = document.getElementById("mod")
+
+        if (window.caty == "mus_pad") {
+            mod.style.display = "none";
+            return;
+        }
+
+        var mus = document.getElementById(window.caty)
+        var player = document.getElementById("mus_pad")
+
+        mod.style.display = "none";
+        mus.style.display = "none";
+        player.style.display = "block";
+
+        window.caty = "mus_pad";
+
+    },
+        300);
+})
+
+fily.addEventListener("click", function() {
+    setTimeout(function() {
+
+        var mod = document.getElementById("mod")
+        mod.style.display = "block";
+
+        var cls = document.getElementById("cls")
+
+        functs.modCls("mod")
+
+        var fil = document.getElementById("filii")
+        fil.addEventListener("click", () => {
+
+            var mod = document.getElementById("mod")
+
+            if (window.caty == "play_pad") {
+                mod.style.display = "none";
+                return;
+            }
+
+            var mus = document.getElementById(window.caty)
+            var player = document.getElementById("play_pad")
+            mod.style.display = "none";
+            mus.style.display = "none";
+            player.style.display = "block";
+
+            window.caty = "play_pad";
+
+        })
+
+        var fol = document.getElementsByClassName("filo")[0]
+        var fol2 = document.getElementsByClassName("filo2")[0]
+
+        fol2.addEventListener("click",
+            () => {
+
+                var dop = document.getElementById("dop")
+                dop.style.display = "block";
+                functs.modCls("dop")
+
+                var oth = document.getElementById("oth")
+
+                if (oth.innerHTML == "") {
+                    functs.getRecs();
+                }
+
+            })
+
+        fol.addEventListener("click",
+            () => {
+                document.getElementById("file").click()
+            })
+
+    },
+        300);
+})
+
+//binding event listener to the input file
+
+file.addEventListener("change", function() {
+    if (this.files && this.files[0]) {
+
+        var name = this.files[0].name;
+        var blob = new Blob([this.files[0]], {
+            type: this.files[0].type
+        })
+        var url = URL.createObjectURL(blob)
+
+        var id = "";
+        for (var i = 0; i < 5; i++) {
+            var rand = Math.floor(Math.random() * 9)
+            id += rand;
+        }
+
+        window.blob = blob;
+        window.urli = url;
+
+        functs.savFile(id, name, "file")
+
+    }
+})
+
+const set_recorder = () => {
+
+    if (window.recorder == "yes") {
+        return;
+    }
+    window.recorder = "yes";
     var secs = 0;
     var init = "";
     var puse = "no";
 
-    //getting things ready for recording
-    const mediaRec = new MediaRecorder(stream)
-    const audioChunk = [];
+    const startBtn = document.getElementById("start")//button to start recording
 
-    mediaRec.ondataavailable = e => {
-        //push stream into array when data is available
-        audioChunk.push(e.data)
+    const stopBtn = document.getElementById("stop")//button to stop recording
+
+    const pauseBtn = document.getElementById("pause")//button to pause recording
+
+    const cancBtn = document.getElementById("canc")//button to cancel recording
+
+    const contBtn = document.getElementById("continue")//button to continue the recording
+
+    const handlesuccess = function(stream) {
+
+        if (init == "yes") {
+            init = "";
+        }
+
+        //getting things ready for recording
+        mediaRec = new MediaRecorder(stream)
+        const audioChunk = [];
+
+        mediaRec.ondataavailable = e => {
+            //push stream into array when data is available
+            audioChunk.push(e.data)
+        }
+
+        mediaRec.onstop = () => {
+            //stop all tracks to release the microphone
+            stream.getTracks().forEach(track => track.stop())
+
+            document.getElementsByClassName("curt2")[0].innerHTML = functs.getFormat(secs)
+
+            secs = "";
+
+            if (init == "") {
+
+                //converting chunk into blob
+                const blob = new Blob(audioChunk, {
+                    type: "audio/wav"
+                })
+
+                //generating url for audio Blob
+                const url = URL.createObjectURL(blob)
+
+                //creating an audio element to play the audio record
+                var elem = document.getElementById("audy")
+                elem.setAttribute("src", url)
+
+                window.urli = url;
+                window.blob = blob;
+
+                var id = "";
+                for (var i = 0; i < 5; i++) {
+                    var rand = Math.floor(Math.random() * 9)
+                    id += rand;
+                }
+                var nam = `StarWave_${id}.wav`;
+                functs.savFile(id, nam, "recs")
+
+            }
+        }
+
+        mediaRec.start()
+
+        setInterval(function() {
+            if (puse == "yes" || secs == "") {
+                return;
+            }
+
+            document.getElementsByClassName("curt2")[0].innerHTML = functs.getFormat(secs)
+            secs++;
+        },
+            1000)
+
     }
 
-    mediaRec.onstop = () => {
+    //binding event listener to the start button
 
-        secs = "";
-        //stop all tracks to release the microphone
-        stream.getTracks().forEach(track => track.stop())
+    startBtn.addEventListener("click",
+        function() {
+            //create access to media element using navigator.
+            //only audio is being used here.
 
-        if (init == "") {
+            stopBtn.style.color = "#ff001e";
+            stopBtn.style.border = "#ff001e 0.01em solid";
+            stopBtn.classList.add("animate")
 
-            //converting chunk into blob
-            const blob = new Blob(audioChunk, {
-                type: "audio/wav"
+            startBtn.style.visibility = "hidden";
+            stopBtn.style.visibility = "visible";
+            pauseBtn.style.visibility = "visible";
+            cancBtn.style.visibility = "visible";
+
+            navigator.mediaDevices.getUserMedia({
+                audio: true
+            }).then(handlesuccess).catch(err => {
+                console.error("Error: ", err)
             })
 
-            //generating url for audio Blob
-            const url = URL.createObjectURL(blob)
-
-            //creating an audio element to play the audio record
-            var elem = document.getElementById("audy")
-            elem.setAttribute("src", url)
-
-            window.urli = url;
-            window.blob = blob;
-
-        }
-    }
-
-    mediaRec.start()
-
-    const getFormat = (secs) => {
-        var min = Math.floor(secs/60)
-        var remSecs = Math.floor(secs%60)
-        return `${String(min).padStart(2, '0')}:${String(remSecs).padStart(2, '0')}`;
-    }
-
-    setInterval(function() {
-        if (puse == "no") {
-            secs++;
-            var format = getFormat(secs)
-            rept.innerHTML = format;
-        }
-    },
-        1000)
-
-    //binding event listener to stop button
+        })
 
     stopBtn.addEventListener("click",
         function() {
@@ -91,6 +260,8 @@ const handlesuccess = function(stream) {
             stopBtn.style.visibility = "hidden";
             pauseBtn.style.visibility = "hidden";
             cancBtn.style.visibility = "hidden";
+
+            secs = 0;
             mediaRec.stop()
         })
 
@@ -103,8 +274,8 @@ const handlesuccess = function(stream) {
             stopBtn.disabled = true;
             cancBtn.disabled = true;
 
-            contBtn.style.color = "#f06";
-            contBtn.style.border = " #f06 0.01em solid";
+            contBtn.style.color = "#ff001e";
+            contBtn.style.border = " #ff001e 0.01em solid";
 
             pauseBtn.style.visibility = "hidden";
             contBtn.style.visibility = "visible";
@@ -115,8 +286,8 @@ const handlesuccess = function(stream) {
 
     contBtn.addEventListener("click",
         function() {
-            stopBtn.style.color = "#f06";
-            stopBtn.style.border = " #f06 0.01em solid";
+            stopBtn.style.color = "#ff001e";
+            stopBtn.style.border = " #ff001e 0.01em solid";
             stopBtn.classList.add("animate")
 
             stopBtn.disabled = false;
@@ -143,7 +314,6 @@ const handlesuccess = function(stream) {
             pauseBtn.style.visibility = "hidden";
             cancBtn.style.visibility = "hidden";
 
-            rept.innerHTML = getFormat(0);
             init = "yes";
             puse = "yes";
             secs = 0;
@@ -152,69 +322,13 @@ const handlesuccess = function(stream) {
 
 }
 
-//binding event listener to the start button
-
-startBtn.addEventListener("click", function() {
-    //create access to media element using navigator.
-    //only audio is being used here.
-
-    stopBtn.style.color = "#f06";
-    stopBtn.style.border = "#f06 0.01em solid";
-    stopBtn.classList.add("animate")
-
-    startBtn.style.visibility = "hidden";
-    stopBtn.style.visibility = "visible";
-    pauseBtn.style.visibility = "visible";
-    cancBtn.style.visibility = "visible";
-
-    navigator.mediaDevices.getUserMedia({
-        audio: true
-    }).then(handlesuccess).catch(err => {
-        console.error("Error: ", err)
-    })
-
-    const dwl = document.getElementById("dwl")
-    const dwld = document.getElementById("dwld")
-
-    dwld.style.display = "none";
-    dwl.style.display = "inline-block";
-})
-
-//binding event listener to the file picker button
-
-fily.addEventListener("click", function() {
-    setTimeout(function() {
-        document.getElementById("file").click()
-    }, 300);
-})
-
-//binding event listener to the input file
-
-file.addEventListener("change", function() {
-    if (this.files && this.files[0]) {
-
-        var name = this.files[0].name;
-        var blob = new Blob([this.files[0]], {
-            type: this.files[0].type
-        })
-        var url = URL.createObjectURL(blob)
-
-        var id = "";
-        for (var i = 0; i < 5; i++) {
-            var rand = Math.floor(Math.random() * 9)
-            id += rand;
-        }
-
-        window.blob = blob;
-        window.urli = url;
-        functs.savRecs(id, name)
-
-    }
-})
-
 //setting controls
 
 const setCtrls = () => {
+
+    if (window.ctrls == "yes") {
+        return;
+    }
 
     const ply = document.getElementById("ply")//for playing the recordings
 
@@ -222,18 +336,12 @@ const setCtrls = () => {
 
     const stp = document.getElementById("stp")//for stoping the played recordings
 
-    const dwl = document.getElementById("dwl")//for saving the recordings
-
-    const dwld = document.getElementById("dwld")//for downloading the recordings
-
     var elem = document.getElementById("audy")
 
     ply.addEventListener("click",
         function() {
 
-            var audy = document.getElementById("audy")
-
-            var url = audy.getAttribute("src")
+            var url = elem.getAttribute("src")
             if (!url) {
                 console.log("no url")
                 return;
@@ -242,8 +350,8 @@ const setCtrls = () => {
             var slider = document.getElementById("slider")
 
             function timeUpdate() {
-                var curr = audy.currentTime;
-                var dura = audy.duration;
+                var curr = elem.currentTime;
+                var dura = elem.duration;
 
                 var change = Math.floor((curr/dura) * 100);
 
@@ -263,22 +371,20 @@ const setCtrls = () => {
 
                 target.style.backgroundSize = `${change}% 100%`;
 
-                var time = (val / 100) * audy.duration;
-                audy.currentTime = time;
+                var time = (val / 100) * elem.duration;
+                elem.currentTime = time;
 
             }
+            elem.play();
 
-            elem.play()
-            audy.ontimeupdate = timeUpdate
+            elem.ontimeupdate = timeUpdate
             slider.addEventListener("input", handleInput)
 
         })
 
     pus.addEventListener("click",
         function() {
-            var audy = document.getElementById("audy")
-
-            var url = audy.getAttribute("src")
+            var url = elem.getAttribute("src")
             if (!url) {
                 console.log("no url")
                 return;
@@ -288,9 +394,7 @@ const setCtrls = () => {
 
     stp.addEventListener("click",
         function() {
-            var audy = document.getElementById("audy")
-
-            var url = audy.getAttribute("src")
+            var url = elem.getAttribute("src")
             if (!url) {
                 console.log("no url")
                 return;
@@ -299,45 +403,19 @@ const setCtrls = () => {
             elem.currentTime = 0;
         })
 
-    dwl.addEventListener("click",
-        function() {
-            var audy = document.getElementById("audy")
-
-            var url = audy.getAttribute("src")
-            if (!url) {
-                console.log("no url")
-                return;
-            }
-            var id = "";
-            for (var i = 0; i < 5; i++) {
-                var rand = Math.floor(Math.random() * 9)
-                id += rand;
-            }
-            var sav = `StarWave_${id}.wav`;
-            functs.savRecs(id, sav)
-        })
-
-    //download the audio stream
-    dwld.addEventListener("click",
-        function() {
-            var audy = document.getElementById("audy")
-
-            var url = audy.getAttribute("src")
-            if (!url) {
-                console.log("no url")
-                return;
-            }
-            var trigger = document.getElementById("download")
-            trigger.href = window.url;
-            trigger.download = window.nam;
-            trigger.click()
-        })
-
 }
 
 const functs = {
-    savRecs(id,
-        sav) {
+    getFormat(secs) {
+        var min = Math.floor(secs/60)
+        var remSecs = Math.floor(secs%60)
+        return `${String(min).padStart(2,
+            '0')}:${String(remSecs).padStart(2,
+            '0')}`;
+    },
+    savFile(id,
+        nam,
+        tag) {
         const addData = (data) => {
             const transaction = db.transaction("Records",
                 "readwrite");
@@ -347,15 +425,10 @@ const functs = {
             transaction.oncomplete = () => {
                 console.log("Data added successfully");
 
-                functs.setNewRec(sav,
+                functs.setNewRec(nam,
                     window.urli,
-                    id)
-
-                const dwl = document.getElementById("dwl")
-                const dwld = document.getElementById("dwld")
-
-                dwl.style.display = "none";
-                dwld.style.display = "inline-block";
+                    id,
+                    tag)
             };
 
             transaction.onerror = (event) => {
@@ -372,69 +445,100 @@ const functs = {
         //save record to database
         addData({
             id: id,
-            nam: sav,
+            nam: nam,
             blob: window.blob
         });
     },
     setNewRec(nam,
         url,
-        id) {
+        id, tag) {
 
-        //sorting out the records
-        var roy = window.roy + 1;
-        var elem = `<div id='pad${roy}' style='padding: 1vw; display: flex'> <div id='aud${id}' class='tup'> ${nam} </div> <button id='del${id}' class='del'>delete</button> </div> <div id='roy${roy}'></div>`;
+        if (tag == "file") {
 
-        var fog = document.getElementById("loky").innerHTML;
+            var namy = document.getElementsByClassName("ply_nam")[0]
 
-        if (!fog.includes("No Records")) {
-            document.getElementById(`roy${window.roy}`).innerHTML = elem;
-        } else {
-            document.getElementById("loky").innerHTML = elem;
-        }
-        window.roy = roy;
+            namy.innerHTML = nam;
 
-        //Event listener for playing and deleting records
-        var ele = document.getElementById(`aud${id}`)
-        var del = document.getElementById(`del${id}`)
+            var audy = document.getElementById("aud_ply")
+            audy.setAttribute("src", url)
 
-        //for playing
-        ele.addEventListener("click", () => {
+            var slider = document.getElementById("pls")
 
-            //change color of record name playing
-            if (window.ply == "") {
-                ele.style.color = "#f06";
-            } else {
-                var tag = window.ply;
-                document.getElementById(tag).style.color = "#fff";
-                ele.style.color = "#f06";
+            var tim = document.getElementsByClassName("curt")[0]
+
+            var dur = document.getElementsByClassName("durt")[0]
+
+            function timeUpdate() {
+                var curr = audy.currentTime;
+                var dura = audy.duration;
+
+                var change = Math.floor((curr/dura) * 100);
+
+                slider.style.backgroundSize = `${change}% 100%`;
+                slider.value = change;
+
+                tim.innerHTML = functs.getFormat(curr)
+
+                dur.innerHTML = functs.getFormat(dura)
             }
-            window.ply = `aud${id}`;
 
-            //set src of the audio element and play
-            elem = document.getElementById("audy")
-            elem.setAttribute("src", url)
+            function handleInput(e) {
 
-            const ply = document.getElementById("ply")
-            ply.click()
+                var target = e.target;
 
-            //display download button when playing
-            const dwl = document.getElementById("dwl")
-            const dwld = document.getElementById("dwld")
+                var min = target.min;
+                var max = target.max;
+                var val = target.value;
 
-            dwl.style.display = "none";
-            dwld.style.display = "inline-block";
-        })
+                var change = (val/max) * 100;
 
-        //for deleting
-        del.addEventListener("click",
-            () => {
-                setTimeout(function() {
-                    functs.delRec(id, roy)
-                }, 150);
+                target.style.backgroundSize = `${change}% 100%`;
+
+                var time = (val / 100) * audy.duration;
+                audy.currentTime = time;
+
+            }
+
+            audy.ontimeupdate = timeUpdate;
+            slider.addEventListener("input", handleInput)
+
+            var ply = document.getElementById("ple")
+            var pus = document.getElementById("pue")
+
+            ply.addEventListener("click", () => {
+                audy.play()
+                ply.style.display = "none";
+                pus.style.display = "inline-block";
             })
 
-        window.url = url;
-        window.nam = nam;
+            pus.addEventListener("click", () => {
+                audy.pause()
+                pus.style.display = "none";
+                ply.style.display = "inline-block";
+            })
+
+            return;
+
+        } else {
+
+            var audy = document.getElementById("audy")
+            audy.setAttribute("src", url)
+
+            document.getElementsByClassName("ply_nam2")[0].innerHTML = nam;
+
+            setCtrls()
+
+        }
+
+    },
+    modCls(id) {
+        var mod = document.getElementById(id)
+        var cls = document.getElementById("cls")
+        window.onclick = function(e) {
+            if (e.target == mod || e.target == cls) {
+                mod.style.display = "none";
+            }
+        }
     },
     getRecs() {
         //read data stored in database
@@ -454,42 +558,104 @@ const functs = {
                 allData.push(cursor.value); // Add the current record to the array
                 cursor.continue(); // Move to the next record
             } else {
-                console.log("All data retrieved using cursor");
+                console.log(allData)
+                allData.forEach(rec => {
 
-                //looping through the array of records
-                allData.forEach(elem => {
+                    if (rec.blob !== null && rec.blob !== undefined) {
 
-                    var url = URL.createObjectURL(elem.blob, {
-                        type: "audio/wav"
-                    })
+                        var blob = new Blob([rec.blob], {
+                            type: rec.blob.type
+                        })
 
-                    //function to sort out each records
-                    functs.setNewRec(elem.nam, url, elem.id)
+                        var url = URL.createObjectURL(blob)
+
+                        functs.setRecs(rec.nam, url, rec.id)
+
+                    } else {
+                        functs.delRec(rec.id, "")
+                    }
 
                 })
             }
         };
 
         request.onerror = (event) => {
-            console.error("Cursor error:", event.target.error);
+            console.error("Cursor error:",
+                event.target.error);
         };
+
     },
-    delRec(id, roy) {
+    setRecs(nam,
+        url,
+        id) {
+
+        var roy = window.roy + 1;
+        var elem = `<div id='pad${roy}' style='padding: 1vw; display: flex'> <div id='aud${id}' class='tup'> ${nam} </div> <button id='del${id}' class='del'>delete</button> </div>`;
+
+        var oth = document.getElementById("oth");
+
+        if (oth.innerHTML !== "") {
+            oth.insertAdjacentHTML("beforeend", elem)
+        } else {
+            oth.innerHTML = elem;
+        }
+        window.roy = roy;
+
+        //Event listener for playing and deleting records
+        var ele = document.getElementById(`aud${id}`)
+        var del = document.getElementById(`del${id}`)
+
+        //for playing
+        ele.addEventListener("click", () => {
+
+            //change color of record name playing
+            if (window.ply == "") {
+                ele.style.color = "#ff001e";
+            } else {
+                var tag = window.ply;
+                document.getElementById(tag).style.color = "#fff";
+                ele.style.color = "#ff001e";
+            }
+            window.ply = `aud${id}`;
+
+            functs.setNewRec(nam, url, id, "file")
+
+            document.getElementById("dop").style.display = "none";
+
+        })
+
+        //for deleting
+        del.addEventListener("click",
+            () => {
+                setTimeout(function() {
+                    functs.delRec(id, roy)
+                }, 150);
+            })
+
+        window.url = url;
+        window.nam = nam;
+
+    },
+    delRec(id,
+        roy) {
 
         //deleting record from our database
-        const transaction = db.transaction("Records", "readwrite");
+        const transaction = db.transaction("Records",
+            "readwrite");
 
         const store = transaction.objectStore("Records");
 
         store.delete(id);
 
         transaction.oncomplete = () => {
-            console.log("Data deleted successfully");
-            document.getElementById(`pad${roy}`).remove()
+            if (roy !== "") {
+                document.getElementById(`pad${roy}`).remove()
+            }
         };
 
         transaction.onerror = (event) => {
-            console.error("Transaction error:", event.target.error);
+            console.error("Transaction error:",
+                event.target.error);
         };
     }
 }
@@ -499,69 +665,103 @@ const audEnd = () => {
     e.currentTime = 0;
 }
 
+const audEnd2 = () => {
+
+    var g = document.getElementById("aud_ply")
+    g.currentTime = 0;
+
+    var ply = document.getElementById("ple")
+    var pus = document.getElementById("pue")
+
+    pus.style.display = "none";
+    ply.style.display = "inline-block";
+}
+
 const handleNotification = (title, body) => {
 
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification(title, {
             body: body,
-            icon: './Screenshot_20241216-125252_2.png'
+            icon: '/storage/emulated/0/Download/1000024418.png'
         });
+    }).catch(err => {
+        console.error("Error: ", err)
     });
 
 }
 
-window.onload = function() {
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./worker.js").then(res => {
-            res.addEventListener("updatefound", () => {
-                var update = res.installing;
-                console.log(update)
-            })
-        }).catch(err => {
-            console.error("worker error: ", err)
-        })
+const fetchVideo = () => {
+
+    const API_KEY = 'AIzaSyBm4VRB8sPsSjNPLxVJm83PLrHOSh8FRUI';
+
+    async function searchYouTube(query) {
+
+        const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${API_KEY}`;
+
+        try {
+
+            const response = await fetch(endpoint);
+            const data = await response.json();
+
+            const resultsContainer = document.getElementById("pasty");
+
+            if (resultsContainer.innerHTML.includes("loading")) {
+                resultsContainer.innerHTML = "";
+            }
+
+            // Display each video in an iframe
+            data.items.forEach(item => {
+                const videoId = item.id.videoId;
+
+                // Create an iframe element
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                iframe.width = '50%';
+                iframe.height = '50vw';
+                iframe.frameBorder = '0';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+
+                // Add iframe to the results container
+                resultsContainer.appendChild(iframe);
+            });
+
+        } catch (error) {
+            console.error('Error fetching YouTube data:', error);
+        }
     }
 
-    window.roy = 0;
-    window.ply = "";
-    window.ply2 = "";
-    setCtrls()
+    var catys = ["Latest tech news",
+        "Elon musk interview",
+        "Fifa world cup 2024",
+        "Tesla cybertruck review 2024",
+        "Football match highlights 2024",
+        "Relaxing music",
+        "Comedy stand-up",
+        "Horror movie trailer",
+        "Space exploration documentaries",
+        "Nollywood songs",
+        "Official trailer Avatar 3",
+        "Japanese anime trailer"]
 
-    //create an instance of indexedDB database
-    const request = indexedDB.open("StarWave_DB", 1);
-
-    request.onupgradeneeded = (event) => {
-        db = event.target.result;
-
-        // Create an object store if it doesn't exist
-        if (!db.objectStoreNames.contains("Records")) {
-            db.createObjectStore("Records", {
-                keyPath: "id"
-            }); // Specify a keyPath
-        }
-    };
-
-    request.onsuccess = (event) => {
-        db = event.target.result;
-        functs.getRecs()
-        console.log("Database opened successfully");
-    };
-
-    request.onerror = (event) => {
-        console.error("Database error:", event.target.error);
-    };
+    catys.forEach(caty => {
+        searchYouTube(caty)
+    })
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+const user_guide = () => {
+
     const steps = document.querySelectorAll(".highlight");
     let currentStep = 0;
     let Id;
     let prev;
 
     function showStep(index) {
-        steps.forEach((step, i) => {
-            step.classList.toggle("active", i === index);
+        steps.forEach((step,
+            i) => {
+            step.classList.toggle("active",
+                i === index);
         });
 
         if (index == 1) {
@@ -582,7 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (index == 3) {
 
             prev = document.getElementById(window.paint)
-            prev.style.backgroundColor = "#333";
+            prev.style.backgroundColor = "#222";
             prev.style.color = "#f90";
 
             Id = document.getElementById("ply")
@@ -592,7 +792,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (index == 4) {
 
             prev = document.getElementById(window.paint)
-            prev.style.backgroundColor = "#333";
+            prev.style.backgroundColor = "#222";
 
             Id = document.getElementById("pus")
             Id.style.backgroundColor = "#999";
@@ -601,7 +801,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (index == 5) {
 
             prev = document.getElementById(window.paint)
-            prev.style.backgroundColor = "#333";
+            prev.style.backgroundColor = "#222";
 
             Id = document.getElementById("stp")
             Id.style.backgroundColor = "#999";
@@ -610,7 +810,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (index == 6) {
 
             prev = document.getElementById(window.paint)
-            prev.style.backgroundColor = "#333";
+            prev.style.backgroundColor = "#222";
 
             Id = document.getElementById("dwl")
             Id.style.backgroundColor = "#999";
@@ -619,7 +819,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (index == 7) {
 
             prev = document.getElementById(window.paint)
-            prev.style.backgroundColor = "#333";
+            prev.style.backgroundColor = "#222";
 
             Id = document.getElementById("loky")
             Id.style.backgroundColor = "#999";
@@ -677,21 +877,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
             window.paint = "";
 
-            const tits = "Welcome Message";
-            const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
-
-            if (Notification.permission === 'granted') {
-                handleNotification(tits, bod)
-            } else {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        console.log('Permission granted for notifications.');
-                        handleNotification(tits, bod)
-                    }
-                });
-            }
-
         });
 
-    if (!localStorage.getItem("visited")) showStep(currentStep);
-});
+    if (!localStorage.getItem("visited"))
+        showStep(currentStep)
+
+}
+
+window.onload = function() {
+
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./worker.js").then(res => {
+            res.addEventListener("updatefound", () => {
+                var update = res.installing;
+                console.log(update)
+            })
+        }).catch(err => {
+            console.error("worker error: ", err)
+        })
+    }
+
+    window.roy = 0;
+    window.ply = "";
+    window.caty = "mus_pad";
+    window.recorder = "";
+    window.ctrls = "";
+
+    //create an instance of indexedDB database
+    const request = indexedDB.open("StarWave_DB", 1);
+
+    request.onupgradeneeded = (event) => {
+        db = event.target.result;
+
+        // Create an object store if it doesn't exist
+        if (!db.objectStoreNames.contains("Records")) {
+            db.createObjectStore("Records", {
+                keyPath: "id"
+            }); // Specify a keyPath
+        }
+    };
+
+    request.onsuccess = (event) => {
+        db = event.target.result;
+        fetchVideo()
+    };
+
+    request.onerror = (event) => {
+        console.error("Database error:",
+            event.target.error);
+    };
+
+    const tits = "Welcome Message";
+    const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording, playing, saving and downloading audio stream as well as audio files on your filesystem. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+
+    if (Notification.permission == 'granted') {
+        handleNotification(tits, bod)
+    } else {
+        Notification.requestPermission().then(permission => {
+            if (permission == 'granted') {
+                handleNotification(tits, bod)
+            }
+        });
+    }
+
+}
