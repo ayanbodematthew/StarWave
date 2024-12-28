@@ -682,7 +682,7 @@ const handleNotification = (title, body) => {
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification(title, {
             body: body,
-            icon: '/storage/emulated/0/Download/1000024418.png'
+            icon: './1000025725.png'
         });
     }).catch(err => {
         console.error("Error: ", err)
