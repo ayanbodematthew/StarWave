@@ -18,6 +18,24 @@
     <title>StarWave</title>
 
     <style type="text/css" media="all">
+        /* Light Mode (Default) */
+:root {
+            --clr1: #fff;
+            --clr2: #ccc;
+            --clr3: #222;
+            --clr4: #ff001e;
+            --clr5: #3d99f5;
+            --clr6: white;
+            --clr7: #282828;
+            --clr9: #282828;
+        }
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --clr1: #191919;
+            --clr2: #282828;
+            --clr7: #282828;
+            --clr9: #ccc;
+        }
         html {
             width: 100vw;
             height: 100vh;
@@ -30,36 +48,36 @@
             height: 100%;
             padding: 0;
             margin: 0;
-            background-image: repeating-conic-gradient(from 0deg, #191919 0deg 15deg, #282828 15deg 35deg);
+            background-image: repeating-conic-gradient(from 0deg, var(--clr1) 0deg 15deg, var(--clr2) 15deg 35deg);
             background-size: 1em 1em;
             user-select: none;
         }
         * {
             font-family: Georgia;
             font-style: normal;
-            color: white;
+            color: var(--clr6);
         }
         *::-webkit-scrollbar {
             display: none;
         }
         a {
             text-decoration: none;
-            color: #fff;
+            color: var(--clr6);
             font-size: 2.5vw;
         }
         header {
-            background: linear-gradient(135deg, #ff001e, #3d99f5);
+            background: linear-gradient(135deg, var(--clr4), var(--clr5));
             padding: 1vw;
             height: 7%;
         }
         header h1 {
             font-size: 5vw;
-            color: #fff;
+            color: var(--clr6);
             margin: 2vw;
         }
         button {
-            background: #222;
-            color: white;
+            background: var(--clr3);
+            color: var(--clr6);
             outline: none;
             padding: 3vw;
             margin: 2vw;
@@ -79,7 +97,7 @@
             width: 99%;
             outline: none;
             background-color: #444;
-            background-image: linear-gradient(135deg, #ff001e, #ff001e);
+            background-image: linear-gradient(135deg, var(--clr4), var(--clr5));
             background-size: 0% 100%;
             background-repeat: no-repeat;
         }
@@ -94,7 +112,7 @@
             appearance: none;
             width: 15px;
             height: 15px;
-            background: #ff001e;
+            background: var(--clr4);
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -110,7 +128,7 @@
             appearance: none;
             width: 15px;
             height: 15px;
-            background: linear-gradient(135deg, #ff001e, #ff001e);
+            background: linear-gradient(135deg, var(--clr4), var(--clr4));
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -121,19 +139,36 @@
             transform: scale(1.2);
             /* Enlarge on hover */
         }
+        input[type="text"] {
+            width: 90%;
+            height: 100%;
+            padding: 1vw;
+            border-radius: 2vw;
+            font-size: 3vw;
+            font-weight: bold;
+            outline: none;
+            border: 0;
+            background: var(--clr1);
+            color: var(--clr9);
+        }
         section {
-            height: 92%;
+            height: 92.1%;
             width: 100%;
             background: rgba(0, 0, 0, 0.65);
-            overflow: auto;
         }
         section.sps {
             display: none;
         }
+        .sech_pad {
+            height: 6%;
+            padding: 2vw;
+            text-align: center;
+        }
         .paste {
             width: 98%;
-            height: 99%;
+            height: 90.5%;
             padding: 1vw;
+            overflow: auto;
         }
         .cont {
             margin: 10% auto;
@@ -157,24 +192,24 @@
             border-radius: 8vw;
             width: 8vw;
             height: 8vw;
-            color: #ff001e;
+            color: var(--clr4);
         }
         .ctrl2 {
             display: none;
             width: 17vw;
         }
         .ctrls:hover, .ctrl2:hover {
-            border: #ff001e 0.01em solid;
+            border: var(--clr4) 0.01em solid;
         }
         .ctrls:focus, .ctrl2:focus {
-            background: #ff001e;
+            background: var(--clr4);
             color: #111;
         }
         .ctrls:focus i, .ctrl2:focus i {
             color: #111;
         }
         .ctrls i, .ctrl2 i {
-            color: #ff001e;
+            color: var(--clr4);
         }
         .logo {
             font-size: 7vw;
@@ -184,8 +219,8 @@
             width: 12vw;
             height: 12vw;
             border-radius: 12vw;
-            background: #3d99f5;
-            border: #fff 0.01em solid;
+            background: linear-gradient(135deg, var(--clr4), var(--clr5));
+            border: var(--clr6) 0.01em solid;
             position: absolute;
             bottom: 3%;
             left: 85%;
@@ -205,7 +240,7 @@
             margin-left: 20vw;
             font-size: 2.7vw;
             background: none;
-            color: #ff001e;
+            color: var(--clr4);
             border: none;
             border-radius: 1vw;
             width: 12vw;
@@ -228,44 +263,42 @@
             margin: 0;
         }
         .fily i {
-            color: #fff;
+            color: var(--clr6);
         }
         .modal {
             display: none;
             position: absolute;
             width: 100%;
             height: 100%;
-            z-index: 5;
-            background-color: rgba(0, 0, 0, 0.35);
+            z-index: 10;
+            background-color: rgba(100, 100, 100, 0.35);
         }
         .tooltip {
             display: none;
             position: absolute;
             top: 30px;
             left: 58%;
+            width: 80%;
             transform: translateX(-50%);
-            padding: 2vw;
-            background: linear-gradient(135deg, #ff001e, #ff001e);
-            color: #fff;
+            padding: 3vw;
+            color: var(--clr6);
             border-radius: 5px;
-            border: #fff 0.01em solid;
             font-size: 3vw;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 2px 6px var(--clr2);
         }
-        .highlight.active .tooltip {
+        .highlight.active .tooltip, .high.active .tooltip {
             display: block;
             animation: fadeIn 0.5s ease-in-out;
         }
         .vavy {
-            position: absolute;
             font-size: 3vw;
             padding: 1vw;
             width: 15vw;
             height: 8vw;
             border-radius: 3vw;
-            background: linear-gradient(135deg, #ff001e, #ff001e);
-            bottom: 5vw;
-            left: 80%;
-            border: #fff 0.01em solid;
+            background: var(--clr5);
+            float: right;
         }
         .trak, .ody {
             display: inline-block;
@@ -298,7 +331,7 @@
         }
         .abt_trk {
             padding: 0.5vw;
-            border: #fff 0.01em solid;
+            border: var(--clr1) 0.01em solid;
             border-radius: 1vw;
         }
         .img {
@@ -306,7 +339,7 @@
             height: 100%;
             border-radius: 1vw;
             object-fit: cover;
-            background-image: repeating-conic-gradient(from 0deg, #191919 0deg 15deg, #282828 15deg 35deg);
+            background-image: repeating-conic-gradient(from 0deg, var(--clr1) 0deg 15deg, var(--clr2) 15deg 35deg);
             background-size: 1em 1em;
         }
         .ldr {
@@ -314,13 +347,13 @@
             margin: 3vw;
             font-size: 3vw;
             text-align: center;
-            color: #3d99f5;
+            color: var(--clr5);
             font-weight: bold;
         }
         .ldr i {
             font-size: 5.5vw;
             padding: 1vw;
-            color: #3d99f5;
+            color: var(--clr5);
             animation: rotate 1s infinite ease-in-out;
         }
         .side_bar {
@@ -331,7 +364,7 @@
             border-radius: 2vw;
         }
         .side_bar .sdy b {
-            color: #fff;
+            color: var(--clr6);
             font-size: 7vw;
             padding-left: 3vw;
         }
@@ -339,11 +372,11 @@
             padding: 3vw;
             margin: 2vw;
             font-size: 4vw;
-            color: #fff;
-            border-bottom: #282828 0.01em solid;
+            color: var(--clr6);
+            border-bottom: var(--clr7) 0.01em solid;
         }
         .opts i {
-            color: #fff;
+            color: var(--clr6);
             font-size: 5vw;
             padding: 1vw;
         }
@@ -353,10 +386,11 @@
         }
         .secs {
             margin: 15% auto;
+            margin-top: 0;
             width: 80vw;
             height: 80vw;
             border-radius: 80vw;
-            background-image: repeating-conic-gradient(from 0deg, #ff001e 0deg 15deg, #282828 15deg 35deg);
+            background-image: repeating-conic-gradient(from 0deg, var(--clr2) 0deg 15deg, var(--clr4) 15deg 35deg);
             background-size: 1em 1em;
         }
         .plnam, .ply_nam {
@@ -386,10 +420,10 @@
         }
         .nextee, .pusee, .playee, .prevee {
             font-size: 4vw;
-            color: #ff001e;
+            color: var(--clr4);
         }
         .nextee i, .playee i, .prevee i {
-            color: #ff001e;
+            color: var(--clr4);
         }
         .pusee {
             display: none;
@@ -407,26 +441,83 @@
             bottom: 80vw;
         }
         .filo i, .filo2 i {
-            color: #ff001e;
+            color: var(--clr4);
         }
         .btm_bar {
-            background: rgba(34,34,34,0.8);
+            background: rgba(100,100,100,0.7);
             width: 98%;
             padding: 1vw;
             height: 51%;
             margin-top: 100%;
             border-radius: 3vw;
+            overflow: auto;
         }
         .ply_list {
             padding: 2vw;
             font-size: 3.5vw;
-            background: #000;
+            background: var(--clr3);
             border-top-right-radius: 3vw;
             border-top-left-radius: 3vw;
             font-weight: bolder;
         }
         .zap {
             font-size: 7vw;
+        }
+        .sol {
+            padding: 1.5vw;
+            border-radius: 1vw;
+            font-size: 3.2vw;
+            text-align: center;
+        }
+        .sets {
+            margin: 5% auto;
+            margin-top: 0;
+            width: 80%;
+            padding: 3vw;
+            text-align: center;
+            font-size: 3.2vw;
+            border-radius: 3vw;
+            background: rgba(100,100,100,0.8);
+        }
+        .sets b {
+            font-size: 4vw;
+        }
+        .lgt, .rgt {
+            background: var(--clr1);
+            font-size: 3.5vw;
+            padding: 1vw;
+            width: 8vw;
+            height: 8vw;
+            border-radius: 8vw;
+        }
+        .lgt i {
+            color: var(--clr9);
+        }
+        .rgt {
+            background: var(--clr2);
+        }
+        .rgt i {
+            color: var(--clr4);
+        }
+        .supt {
+            padding: 1vw;
+            border-radius: 2vw;
+            background: linear-gradient(135deg, #ff001e, #3d99f5);
+            text-align: center;
+            width: 70%;
+            height: 8vw;
+            font-size: 3vw;
+        }
+        .disp {
+            padding: 3vw;
+            margin: 20% auto;
+            width: 80%;
+            min-height: 15%;
+            max-height: 70%;
+            border-radius: 3vw;
+            background: rgba(100,100,100,0.8);
+            font-size: 3vw;
+            text-align: center;
         }
         #start, #stop, #pause, #canc, #continue {
             position: absolute;
@@ -445,7 +536,7 @@
             font-size: 6vw;
         }
         #start i, #stop i {
-            color: #ff001e;
+            color: var(--clr4);
         }
         #zero {
             margin: 10% auto;
@@ -480,6 +571,10 @@
 
 <body>
 
+    <div id="mod3" class="modal">
+        <div id="disp" class="disp"></div>
+    </div>
+
     <div id="mod" class='modal'>
         <div class='side_bar'>
             <div class="sdy">
@@ -494,8 +589,16 @@
             <div id="filii" class='opts'>
                 <i class="fa fa-folder-o"></i> Library
             </div>
-            <div class='opts'>
+            <div id="sett" class='opts'>
                 <i class="fa fa-cog"></i> Settings
+            </div>
+            <br><br><br><br>
+            <br><br><br><br>
+            <br><br><br><br>
+            <br><br><br><br>
+            <br><br><br>
+            <div class='opts'>
+                <button id="supt" class="supt">&hearts; Support us</button>
             </div>
         </div>
     </div>
@@ -509,60 +612,84 @@
         </div>
     </div>
 
-    <nav id="mod" class="modal">
-        <div class="highlight">
+    <nav id="mod2" class="modal">
+        <div class="high">
             <span id="zero" class="tooltip">
                 <span style="font-size: 12vw">&#9733</span> <br><br>
-                <b> Hello there, it's good to have you here on StatWave. <br> For your ease of access, let's go through some functionalities. <br> Click on <strong>next</strong> below to continue </b>
+                <b>Hello there, it's good to have you here on StatWave.</b> <br> <b> For your ease of access, let's go through how the media library works </b> <br>
+                <div id="pan">
+                    <button class="vavy" id="nextBtn2">next</button>
+                </div>
+            </span>
+        </div>
+        <div class="high">
+            <span id="oney" class="tooltip">
+                <b class="sol">User Guide</b> <br><br>
+                Click to play selected audio file
+            </span>
+        </div>
+        <div class="high">
+            <span id="twoy" class="tooltip">
+                <b class="sol">User Guide</b> <br><br>
+                Click to go back to the previously played file
+            </span>
+        </div>
+        <div class="high">
+            <span id="thry" class="tooltip">
+                <b class="sol">User Guide</b> <br><br>
+                Click to go forward to the next file on the playlist
+            </span>
+        </div>
+        <div class="high">
+            <span id="fouy" class="tooltip">
+                <b class="sol">User Guide</b> <br><br>
+                Click to open playlist
+            </span>
+        </div>
+        <div class="high">
+            <span id="fivy" class="tooltip">
+                <b class="sol">User Guide</b> <br><br>
+                Click to select file from your device <br>
+                <div id="pan">
+                    <button class="vavy" id="finishBtn2">finish</button>
+                </div>
             </span>
         </div>
         <div class="highlight">
-            <span class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to select audio file from file system
+            <span id="zero" class="tooltip">
+                <span style="font-size: 12vw">&#9733</span> <br><br>
+                <b>Hello there, it's good to have you here on StatWave.</b> <br> <b> For your ease of access, let's go through how the recorder works </b> <br>
+                <div id="pam">
+                    <button class="vavy" id="nextBtn">next</button>
+                </div>
             </span>
         </div>
         <div class="highlight">
             <span id="one" class="tooltip">
-                <b>User Guide</b> <br><br>
+                <b class="sol">User Guide</b> <br><br>
                 Click to start audio recording
             </span>
         </div>
         <div class="highlight">
             <span id="two" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to play: <br> <ol>
-                    <li>audio recording</li>
-                    <li> saved records and files</li>
-                </ol>
+                <b class="sol">User Guide</b> <br><br>
+                Click to play the audio recorded
             </span>
         </div>
         <div class="highlight">
             <span id="three" class="tooltip">
-                <b>User Guide</b> <br><br>
+                <b class="sol">User Guide</b> <br><br>
                 Click to pause audio player
             </span>
         </div>
         <div class="highlight">
             <span id="four" class="tooltip">
-                <b>User Guide</b> <br><br>
+                <b class="sol">User Guide</b> <br><br>
                 Click to stop audio player
+                <br>
+                <button class="vavy" id="finishBtn">finish</button>
             </span>
         </div>
-        <div class="highlight">
-            <span id="five" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Click to save audio recording
-            </span>
-        </div>
-        <div class="highlight">
-            <span id="six" class="tooltip">
-                <b>User Guide</b> <br><br>
-                Your files and saved recordings will appear here <br> Click on a record to play it
-            </span>
-        </div>
-        <button class="vavy" id="nextBtn">next</button>
-        <button class="vavy" id="finishBtn">finish</button>
     </nav>
 
     <header>
@@ -572,10 +699,34 @@
         </h1>
     </header>
 
+    <section id="set_pad" class="sps">
+        <br><br>
+        <div class="sets">
+            <b>Theme</b> <br>
+            Light theme <button id="lgt" class="lgt">
+                <i class="fa fa-toggle-off"></i>
+            </button> <br>
+            Dark theme <button id="drk" class="lgt">
+                <i class="fa fa-toggle-off"></i>
+            </button> <br>
+            <span style="font-size: 2.5vw"> *Theme color will automatically change according to system default unless explicitly setted </span>
+        </div>
+        <br><br>
+        <div class="sets">
+            <b>Audio Playlist</b> <br>
+            Autoplay next song <button class="rgt">
+                <i class="fa fa-toggle-on"></i>
+            </button>
+        </div>
+    </section>
+
     <section id="mus_pad">
+        <div class="sech_pad">
+            <input type="text" id="sech" placeholder="Search for video" />
+        </div>
         <div id="pasty" class="paste">
             <div class="ldr">
-                <i class="fa fa-refresh"></i>
+                <i class="fa fa-spinner"></i>
                 <br> loading...
             </div>
         </div>
@@ -586,11 +737,12 @@
     </button>
 
     <section id="play_pad" class="sps">
+        <br><br><br>
         <div class="secs"></div>
-        <button class="filo">
+        <button id="pku" class="filo">
             <i class="fa fa-file-o"></i>
         </button>
-        <button class="filo2">
+        <button id="pkv" class="filo2">
             <i class="fa fa-list-ul"></i>
         </button>
         <div class="plnam">
@@ -605,7 +757,7 @@
                 <button class="durt">00:00</button>
             </div>
             <input type="range" id="pls" min="0" max="100" value="0" />
-            <button class="prevee">
+            <button id="prv" class="prevee">
                 &lt;&lt;
             </button>
             <button id="ple" class="playee">
@@ -614,7 +766,7 @@
             <button id="pue" class="pusee">
                 ||
             </button>
-            <button class="nextee">
+            <button id="nxt" class="nextee">
                 &gt;&gt;
             </button>
         </div>
@@ -623,6 +775,7 @@
 
     <section id="rec_pad" class="sps">
         <div class="paste">
+            <br><br>
             <div class="secs"></div>
             <div class="ply_nam2">
                 _ _ _
