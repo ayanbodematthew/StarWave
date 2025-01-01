@@ -28,11 +28,15 @@ sech.addEventListener("keydown", (e) => {
             sech.value = "";
         }
     }
+}, {
+    passive: true
 })
 
 supt.addEventListener("click",
     () => {
         document.getElementById("ads").click()
+    }, {
+        passive: true
     })
 
 sett.addEventListener("click", function() {
@@ -87,6 +91,8 @@ sett.addEventListener("click", function() {
 
     },
         300);
+}, {
+    passive: true
 })
 
 recky.addEventListener("click", function() {
@@ -112,6 +118,8 @@ recky.addEventListener("click", function() {
 
     },
         300);
+}, {
+    passive: true
 })
 
 zap.addEventListener("click", function() {
@@ -135,6 +143,8 @@ zap.addEventListener("click", function() {
 
     },
         300);
+}, {
+    passive: true
 })
 
 fily.addEventListener("click", function() {
@@ -194,6 +204,8 @@ fily.addEventListener("click", function() {
 
     },
         300);
+}, {
+    passive: true
 })
 
 //binding event listener to the input file
@@ -219,6 +231,8 @@ file.addEventListener("change", function() {
         functs.savFile(id, name, "file")
 
     }
+}, {
+    passive: true
 })
 
 const set_recorder = () => {
@@ -328,6 +342,9 @@ const set_recorder = () => {
                 console.error("Error: ", err)
             })
 
+        },
+        {
+            passive: true
         })
 
     stopBtn.addEventListener("click",
@@ -343,6 +360,9 @@ const set_recorder = () => {
 
             secs = 0;
             mediaRec.stop()
+        },
+        {
+            passive: true
         })
 
     pauseBtn.addEventListener("click",
@@ -362,6 +382,9 @@ const set_recorder = () => {
             puse = "yes";
 
             mediaRec.pause()
+        },
+        {
+            passive: true
         })
 
     contBtn.addEventListener("click",
@@ -381,6 +404,9 @@ const set_recorder = () => {
             puse = "no";
 
             mediaRec.resume()
+        },
+        {
+            passive: true
         })
 
     cancBtn.addEventListener("click",
@@ -398,6 +424,9 @@ const set_recorder = () => {
             puse = "yes";
             secs = 0;
             mediaRec.stop()
+        },
+        {
+            passive: true
         })
 
 }
@@ -460,6 +489,9 @@ const setCtrls = () => {
             elem.ontimeupdate = timeUpdate
             slider.addEventListener("input", handleInput)
 
+        },
+        {
+            passive: true
         })
 
     pus.addEventListener("click",
@@ -470,6 +502,9 @@ const setCtrls = () => {
                 return;
             }
             elem.pause()
+        },
+        {
+            passive: true
         })
 
     stp.addEventListener("click",
@@ -481,6 +516,9 @@ const setCtrls = () => {
             }
             elem.pause()
             elem.currentTime = 0;
+        },
+        {
+            passive: true
         })
 
 }
@@ -627,7 +665,9 @@ const functs = {
             }
 
             audy.ontimeupdate = timeUpdate;
-            slider.addEventListener("input", handleInput)
+            slider.addEventListener("input", handleInput, {
+                passive: true
+            })
 
             var ply = document.getElementById("ple")
             var pus = document.getElementById("pue")
@@ -639,12 +679,16 @@ const functs = {
                 ply.style.display = "none";
                 pus.style.display = "inline-block";
                 window.ply_id = id;
+            }, {
+                passive: true
             })
 
             pus.addEventListener("click", () => {
                 audy.pause()
                 pus.style.display = "none";
                 ply.style.display = "inline-block";
+            }, {
+                passive: true
             })
 
             nxt.addEventListener("click", () => {
@@ -664,7 +708,10 @@ const functs = {
 
                 }
 
-            })
+            },
+                {
+                    passive: true
+                })
 
             prv.addEventListener("click",
                 () => {
@@ -682,6 +729,9 @@ const functs = {
 
                     }
 
+                },
+                {
+                    passive: true
                 })
 
             ply.click()
@@ -1016,6 +1066,9 @@ const user_guide = () => {
             () => {
                 currentStep++;
                 if (currentStep < steps.length) showStep(currentStep);
+            },
+            {
+                passive: true
             });
     }
 
@@ -1036,6 +1089,9 @@ const user_guide = () => {
 
             document.getElementById("pam4").remove()
 
+        },
+        {
+            passive: true
         });
 
     if (!localStorage.getItem("visited"))
@@ -1144,6 +1200,9 @@ const user_guide2 = () => {
             () => {
                 currentStep++;
                 if (currentStep < steps.length) showStep(currentStep);
+            },
+            {
+                passive: true
             });
 
     }
@@ -1165,6 +1224,9 @@ const user_guide2 = () => {
 
             document.getElementById("pan5").remove()
 
+        },
+        {
+            passive: true
         })
 
     if (!localStorage.getItem("visited2"))
