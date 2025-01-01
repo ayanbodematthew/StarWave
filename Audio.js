@@ -1286,7 +1286,7 @@ window.onload = function() {
     };
 
     const tits = "Welcome Message";
-    const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording audio stream, selecting and playing audio files on your filesystem as well as watching video previews from youtube. \nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+    const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording audio stream, selecting and playing audio files on your device as well as watching video previews from youtube.\nStarWave uses ads for generating income and revenue for growth and development.\nFor every heart you click and support you gave, you are contributing to our growth.\nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
 
     if (Notification.permission == 'granted') {
         var check = localStorage.getItem("noty")
