@@ -11,7 +11,8 @@
         "fullscreen",
         "standalone",
         "minimal-ui",
-        "tabbed"
+        "tabbed",
+        "window-controls-overlay"
     ],
     "orientation": "portrait-primary",
     "background_color": "#191919",
