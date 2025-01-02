@@ -525,7 +525,7 @@ const setCtrls = () => {
 
 const functs = {
     sechVideo(sech) {
-        const API_KEY = 'AIzaSyBm4VRB8sPsSjNPLxVJm83PLrHOSh8FRUI';
+        const API_KEY = "AIzaSyBhTnzMRBDVI__Lo45OGTc1DS_MV6VQWIc";
 
         const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(sech)}&type=video&maxResults=5&key=${API_KEY}`;
 
@@ -905,7 +905,7 @@ const handleNotification = (title, body) => {
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification(title, {
             body: body,
-            icon: './1000025725.png'
+            icon: '/storage/emulated/0/Download/1000024418.png'
         });
     }).catch(err => {
         console.error("Error: ", err)
