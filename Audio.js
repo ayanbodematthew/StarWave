@@ -563,9 +563,16 @@ const functs = {
                 disp.innerHTML = `<div style='padding: 2vw'> <b>Error</b> <br><br> ${e.message} </div>`;
             }
 
-            document.getElementById("mod3").style.display = "block";
+            var mod = document.getElementById("mod3")
+            mod.style.display = "block";
 
-            functs.modCls("mod3")
+            document.getElementById("ext").addEventListener("click",
+                () => {
+                    mod.style.display = "none";
+                },
+                {
+                    passive: true
+                })
 
         }
 
@@ -905,7 +912,7 @@ const handleNotification = (title, body) => {
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification(title, {
             body: body,
-            icon: '/storage/emulated/0/Download/1000024418.png'
+            icon: './1000027525.png'
         });
     }).catch(err => {
         console.error("Error: ", err)
