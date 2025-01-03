@@ -63,7 +63,7 @@ async function cacheFirstWithExpiration(req) {
             return resp;
         }
 
-        const net_resp = await fetch(req);
+        const net_resp = fetch(req);
         net_resp.then(res => {
             const cloned = res.clone()
             cache.put(req, cloned);
