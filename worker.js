@@ -31,8 +31,10 @@ self.addEventListener("fetch", function(event) {
 
     var url = new URL(event.request.url)
     if (url.origin == "https://www.googleapis.com") {
+
         event.respondWith(cacheFirstWithExpiration(event.request))
         return;
+
     }
 
     event.respondWith(fetch(event.request).then(response => {
@@ -55,21 +57,18 @@ self.addEventListener("fetch", function(event) {
 async function cacheFirstWithExpiration(req) {
 
     const cache = await caches.open(cacheName2)
-    const resp = cache.match(req)
 
-    if (resp) {
-        resp.then(data => {
-            return data;
-        }).catch(err => {
-            console.error("Error: ", err)
+    return cache.match(req).then(resp => {
+        if (resp) {
+            return resp;
+        }
+
+        const net_resp = await fetch(req);
+        net_resp.then(res => {
+            const cloned = res.clone()
+            cache.put(req, cloned);
+            return res;
         })
-    }
-
-    const net_resp = await fetch(req);
-    if (net_resp.ok) {
-        const cloned = net_resp.clone()
-        cache.put(req, cloned);
-    }
-    return net_resp;
+    })
 
 }
