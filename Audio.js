@@ -912,7 +912,7 @@ const handleNotification = (title, body) => {
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification(title, {
             body: body,
-            icon: './1000027525.png'
+            icon: './1000025725.png'
         });
     }).catch(err => {
         console.error("Error: ", err)
