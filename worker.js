@@ -57,7 +57,7 @@ async function cacheFirstWithExpiration(req) {
     const cache = await caches.open(cacheName2)
     const resp = cache.match(req)
 
-    if (resp) {
+    if (resp !== undefined && resp !== null) {
 
         const cacheTime = new Date(resp.headers.get("date")).getTime()
         const now = Date.now();
