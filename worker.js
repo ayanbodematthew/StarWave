@@ -70,7 +70,6 @@ async function cacheFirstWithExpiration(req) {
             return res;
         }).catch(err => {
             console.error("Error: ", err)
-            return "not found";
         })
     })
 
