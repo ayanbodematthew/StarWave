@@ -186,7 +186,7 @@ wiki.addEventListener("click", () => {
 
             if (con.innerHTML.match(/[a-z0-9]/)) {
 
-                var apiKey = `https://en.wikipidia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(con.innerHTML)}&format=json&origin=*`;
+                var apiKey = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(con.innerHTML)}&format=json&origin=*`;
 
                 fetch(apiKey).then(resp => resp.json()).then(data => {
 
@@ -203,7 +203,7 @@ wiki.addEventListener("click", () => {
 
                         const link = document.createElement("a")
 
-                        link.href = `https://en.wikipidia.org/wiki/${encodeURIComponent(res.title)}`;
+                        link.href = `https://en.wikipedia.org/wiki/${encodeURIComponent(res.title)}`;
 
                         link.textContent = res.title;
 
