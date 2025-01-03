@@ -5,13 +5,13 @@
     "version": "0.0.1",
     "start_url": "./Audio.html",
     "scope": "./",
-    "description": "watch youTube videos, media audio recorder and audio player",
+    "description": "A media audio recorder and audio player",
     "display": "standalone",
     "display_override": [
         "fullscreen",
         "standalone",
-        "minimal-ui",
         "tabbed",
+        "minimal-ui",
         "window-controls-overlay"
     ],
     "orientation": "portrait-primary",
