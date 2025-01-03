@@ -59,7 +59,6 @@ async function cacheFirstWithExpiration(req) {
 
     if (resp) {
         resp.then(data => {
-            console.log(data)
             return data;
         }).catch(err => {
             console.error("Error: ", err)
