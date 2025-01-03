@@ -31,10 +31,8 @@ self.addEventListener("fetch", function(event) {
 
     var url = new URL(event.request.url)
     if (url.origin == "https://www.googleapis.com") {
-
         event.respondWith(cacheFirstWithExpiration(event.request))
         return;
-
     }
 
     event.respondWith(fetch(event.request).then(response => {
@@ -58,6 +56,7 @@ async function cacheFirstWithExpiration(req) {
 
     const cache = await caches.open(cacheName2)
     const resp = cache.match(req)
+    console.log(resp)
 
     if (resp) {
 
