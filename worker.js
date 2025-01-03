@@ -68,6 +68,9 @@ async function cacheFirstWithExpiration(req) {
             const cloned = res.clone()
             cache.put(req, cloned);
             return res;
+        }).catch(err => {
+            console.error("Error: ", err)
+            return "not found";
         })
     })
 
