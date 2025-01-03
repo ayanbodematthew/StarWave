@@ -32,6 +32,7 @@ self.addEventListener("fetch", function(event) {
     var url = new URL(event.request.url)
     if (url.origin == "https://www.googleapis.com") {
         event.respondWith(cacheFirstWithExpiration(event.request))
+        return;
     }
 
     event.respondWith(fetch(event.request).then(response => {
@@ -57,8 +58,12 @@ async function cacheFirstWithExpiration(req) {
     const resp = cache.match(req)
 
     if (resp) {
-        console.log(resp)
-        return resp;
+        resp.then(data => {
+            console.log(data)
+            return data;
+        }).catch(err => {
+            console.error("Error: ", err)
+        })
     }
 
     const net_resp = await fetch(req);
