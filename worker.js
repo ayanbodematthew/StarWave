@@ -56,7 +56,6 @@ async function cacheFirstWithExpiration(req) {
 
     const cache = await caches.open(cacheName2)
     const resp = cache.match(req)
-    console.log(resp)
 
     if (resp) {
 
