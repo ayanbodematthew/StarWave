@@ -58,16 +58,7 @@ async function cacheFirstWithExpiration(req) {
     const resp = cache.match(req)
 
     if (resp !== undefined && resp !== null) {
-
-        const cacheTime = new Date(resp.headers.get("date")).getTime()
-        const now = Date.now();
-
-        if (now - cacheTime < dura) {
-            return resp;
-        } else {
-            await caches.delete(req);
-        }
-
+        return resp;
     }
 
     const net_resp = await fetch(req);
