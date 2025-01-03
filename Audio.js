@@ -14,6 +14,8 @@ const sech = document.getElementById("sech")
 
 const supt = document.getElementById("supt")
 
+const wiki = document.getElementById("wiki")
+
 const playlist = [];
 
 var db;
@@ -56,6 +58,9 @@ sett.addEventListener("click", function() {
         mus.style.display = "none";
         player.style.display = "block";
 
+        if (window.caty == "wiki_pad") {
+            document.getElementById("adss").style.display = "block";
+        }
         window.caty = "set_pad";
 
         if (window.theme !== null && window.theme !== undefined) {
@@ -112,6 +117,9 @@ recky.addEventListener("click", function() {
         mus.style.display = "none";
         player.style.display = "block";
 
+        if (window.caty == "wiki_pad") {
+            document.getElementById("adss").style.display = "block";
+        }
         window.caty = "rec_pad";
         user_guide()
         set_recorder()
@@ -139,7 +147,86 @@ zap.addEventListener("click", function() {
         mus.style.display = "none";
         player.style.display = "block";
 
+        if (window.caty == "wiki_pad") {
+            document.getElementById("adss").style.display = "block";
+        }
         window.caty = "mus_pad";
+
+    },
+        300);
+}, {
+    passive: true
+})
+
+wiki.addEventListener("click", () => {
+    setTimeout(function() {
+
+        var mod = document.getElementById("mod")
+
+        if (window.caty == "wiki_pad") {
+            mod.style.display = "none";
+            return;
+        }
+
+        var mus = document.getElementById(window.caty)
+        var player = document.getElementById("wiki_pad")
+
+        mod.style.display = "none";
+        mus.style.display = "none";
+        player.style.display = "block";
+
+        window.caty = "wiki_pad";
+        document.getElementById("adss").style.display = "none";
+
+        var sen = document.getElementById("sen")
+
+        sen.addEventListener("click", () => {
+
+            var con = document.getElementById("con")
+
+            if (con.innerHTML.match(/[a-z0-9]/)) {
+
+                var apiKey = `https://en.wikipidia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(con.innerHTML)}&format=json&origin=*`;
+
+                fetch(apiKey).then(resp => resp.json()).then(data => {
+
+                    const result = data.query.search;
+
+                    const cont = document.getElementById("w_pasty")
+
+                    if (result.length <= 0) {
+                        cont.innerHTML = "No results found";
+                        return;
+                    }
+
+                    result.forEach(res => {
+
+                        const link = document.createElement("a")
+
+                        link.href = `https://en.wikipidia.org/wiki/${encodeURIComponent(res.title)}`;
+
+                        link.textContent = res.title;
+
+                        link.target = "_blank";
+
+                        link.style.display = "block";
+
+                        cont.appendChild(link);
+
+                    })
+
+                }).catch(err => {
+                    console.error("Error: ", err)
+                })
+
+            }
+
+            con.innerHTML = "";
+
+        },
+            {
+                passive: true
+            })
 
     },
         300);
@@ -159,25 +246,29 @@ fily.addEventListener("click", function() {
 
         var fil = document.getElementById("filii")
 
-        fil.addEventListener("click", () => {
+        fil.addEventListener("click",
+            () => {
 
-            var mod = document.getElementById("mod")
+                var mod = document.getElementById("mod")
 
-            if (window.caty == "play_pad") {
+                if (window.caty == "play_pad") {
+                    mod.style.display = "none";
+                    return;
+                }
+
+                var mus = document.getElementById(window.caty)
+                var player = document.getElementById("play_pad")
                 mod.style.display = "none";
-                return;
-            }
+                mus.style.display = "none";
+                player.style.display = "block";
 
-            var mus = document.getElementById(window.caty)
-            var player = document.getElementById("play_pad")
-            mod.style.display = "none";
-            mus.style.display = "none";
-            player.style.display = "block";
+                if (window.caty == "wiki_pad") {
+                    document.getElementById("adss").style.display = "block";
+                }
+                window.caty = "play_pad";
+                user_guide2()
 
-            window.caty = "play_pad";
-            user_guide2()
-
-        })
+            })
 
         var fol = document.getElementsByClassName("filo")[0]
         var fol2 = document.getElementsByClassName("filo2")[0]
@@ -524,10 +615,10 @@ const setCtrls = () => {
 }
 
 const functs = {
-    sechVideo(sech) {
+    sechVideo(elem) {
         const API_KEY = "AIzaSyBhTnzMRBDVI__Lo45OGTc1DS_MV6VQWIc";
 
-        const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(sech)}&type=video&maxResults=5&key=${API_KEY}`;
+        const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(elem)}&type=video&maxResults=5&key=${API_KEY}`;
 
         var disp = document.getElementById("disp")
 
@@ -551,7 +642,7 @@ const functs = {
                     iframe.allowFullscreen = true;
 
                     // Add iframe to the results container
-                    if (disp.innerHTML.includes("Error")) {
+                    if (disp.innerHTML.includes("Error") || disp.innerHTML.includes("loading")) {
                         disp.innerHTML = "";
                     }
 
