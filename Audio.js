@@ -201,17 +201,12 @@ wiki.addEventListener("click", () => {
 
                     result.forEach(res => {
 
-                        const link = document.createElement("a")
+                        var elem = `<div class='snip'>
+                        <div class='tity'>${res.title}</div>
+                        <div class='nipy'>${res.snippet}... <br><br> visit <a style='color:#f90;text-decoration:underline;font-size:3.5vw' href='https://en.wikipedia.org/wiki/${encodeURIComponent(res.title)}' target='_blank'>${res.title}</a> for more. </div>
+                        </div>`;
 
-                        link.href = `https://en.wikipedia.org/wiki/${encodeURIComponent(res.title)}`;
-
-                        link.textContent = res.title;
-
-                        link.target = "_blank";
-
-                        link.style.display = "block";
-
-                        cont.appendChild(link);
+                        cont.insertAdjacentHTML("beforeend", elem);
 
                     })
 
