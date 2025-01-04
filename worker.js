@@ -1,7 +1,6 @@
 const cacheFiles = ["/Audio.html", "/Audio.js"]
 
 const cacheName = "v3";
-const cacheName2 = "video_cache_v1";
 
 const dura = 7 * 24 * 60 * 60 * 1000;
 
@@ -55,22 +54,20 @@ self.addEventListener("fetch", function(event) {
 })
 
 async function cacheFirstWithExpiration(req) {
+    const cache = await caches.open(cacheName);
 
-    const cache = await caches.open(cacheName2)
+    // Check cache first
+    const cachedResp = await cache.match(req);
+    if (cachedResp) {
+        return cachedResp;
+    }
 
-    return cache.match(req).then(resp => {
-        if (resp) {
-            return resp;
-        }
-    })
+    // Fetch from network if not in cache
+    const netResp = await fetch(req);
+    if (netResp && netResp.ok) {
+        // Clone the response before caching
+        cache.put(req, netResp.clone());
+    }
 
-    const net_resp = await fetch(req);
-    net_resp.then(res => {
-        const cloned = res.clone()
-        cache.put(req, cloned);
-        return res;
-    }).catch(err => {
-        console.error("Error: ", err)
-    })
-
+    return netResp;
 }
