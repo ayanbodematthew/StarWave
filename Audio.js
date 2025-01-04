@@ -201,12 +201,24 @@ wiki.addEventListener("click", () => {
 
                     result.forEach(res => {
 
-                        var elem = `<div class='snip'>
-                        <div class='tity'>${res.title}</div>
-                        <div class='nipy'>${res.snippet}... <br><br> visit <a style='color:#f90;text-decoration:underline;font-size:3.5vw' href='https://en.wikipedia.org/wiki/${encodeURIComponent(res.title)}' target='_blank'>${res.title}</a> for more. </div>
-                        </div>`;
+                        var arty = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=${encodeURIComponent(res.title)}&format=json&origin=*&explaintext`;
 
-                        cont.insertAdjacentHTML("beforeend", elem);
+                        fetch(arty).then(ret => ret.json()).then(retn => {
+
+                            var Id = Object.keys(retn.query.pages)[0]
+
+                            var article = retn.query.pages[Id]
+
+                            var elem = `<div class='snip'>
+                            <div class='tity'>${article.title}</div>
+                            <div class='nipy'> <b>${article.extract}</b> </div>
+                            </div>`;
+
+                            cont.insertAdjacentHTML("beforeend", elem);
+
+                        }).catch(err2 => {
+                            console.error("Error_2: ", err2)
+                        })
 
                     })
 
