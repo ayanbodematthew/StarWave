@@ -179,6 +179,7 @@ wiki.addEventListener("click", () => {
         document.getElementById("adss").style.display = "none";
 
         var sen = document.getElementById("sen")
+        var hist = document.getElementById("hist")
 
         sen.addEventListener("click", () => {
 
@@ -195,13 +196,15 @@ wiki.addEventListener("click", () => {
                     const cont = document.getElementById("w_pasty")
 
                     if (result.length <= 0) {
-                        cont.innerHTML = "No results found";
+                        cont.innerHTML = `<div class='snip'>
+                        <div class='nipy'> <b>No results found</b> </div>
+                        </div>`;
                         return;
                     }
 
                     result.forEach(res => {
 
-                        var arty = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=${encodeURIComponent(res.title)}&format=json&origin=*&explaintext`;
+                        var arty = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=${encodeURIComponent(res.title)}&format=json&origin=*`;
 
                         fetch(arty).then(ret => ret.json()).then(retn => {
 
@@ -216,6 +219,13 @@ wiki.addEventListener("click", () => {
 
                             cont.insertAdjacentHTML("beforeend", elem);
 
+                            var ach = document.querySelectorAll(".nipy")
+
+                            var link = ach.querySelectorAll("a")
+
+                            link.style.color = "#f90";
+                            link.style.textDecoration = "underline";
+
                         }).catch(err2 => {
                             console.error("Error_2: ", err2)
                         })
@@ -226,9 +236,28 @@ wiki.addEventListener("click", () => {
                     console.error("Error: ", err)
                 })
 
+                functs.savSech(con.innerHTML)
+
             }
 
             con.innerHTML = "";
+
+        },
+            {
+                passive: true
+            })
+
+        hist.addEventListener("click", () => {
+
+            var mod = document.getElementById("mod4");
+            mod.style.display = "block";
+
+            var ele = document.getElementById("oths")
+            if (ele.innerHTML !== "") {
+                return;
+            }
+            functs.getWikiSech()
+            functs.modCls("mod4")
 
         },
             {
@@ -684,6 +713,31 @@ const functs = {
             '0')}:${String(remSecs).padStart(2,
             '0')}`;
     },
+    savSech(title) {
+        let data = {
+            title: title
+        }
+
+        let oth = document.getElementById("oths")
+        if (oth.innerHTML.includes(title)) {
+            return;
+        }
+
+        const transaction = db.transaction("Searchs",
+            "readwrite");
+        const store = transaction.objectStore("Searchs");
+        store.add(data);
+
+        transaction.oncomplete = () => {
+            console.log("Data added successfully");
+            functs.setSechs(title)
+        };
+
+        transaction.onerror = (event) => {
+            console.error("Transaction error:",
+                event.target.error);
+        };
+    },
     savFile(id,
         nam,
         tag) {
@@ -863,6 +917,65 @@ const functs = {
             }
         }
     },
+    setSechs(title) {
+        var Id = "";
+        for (var i = 0; i < 5; i++) {
+            var rand = Math.floor(Math.random() * 5)
+            Id += rand;
+        }
+
+        var pad = `<div style='padding:3vw; font-size:3.5vw' id='${Id}'>${title}</div>`;
+
+        document.getElementById("oths").insertAdjacentHTML("beforeend", pad)
+
+        var toy = document.getElementById(Id)
+
+        toy.addEventListener("click", () => {
+
+            var con = document.getElementById("con")
+            var ele = toy.innerHTML;
+
+            ele = ele.replace("<div>", "/n")
+            ele = ele.replace("</div>", "")
+
+            con.innerHTML = ele;
+
+            document.getElementById("sen").click()
+
+            document.getElementById("mod4").style.display = "none";
+
+        }, {
+            passive: true
+        })
+    },
+    getWikiSech() {
+        //read data stored in database
+        const transaction = db.transaction("Searchs",
+            "readonly");
+
+        const store = transaction.objectStore("Searchs");
+
+        const request = store.openCursor();
+
+        const allData = []; // Array to store all records
+
+        request.onsuccess = (event) => {
+            const cursor = event.target.result;
+
+            if (cursor) {
+                allData.push(cursor.value)
+                cursor.continue();
+            } else {
+
+                allData.forEach(elem => {
+                    var title = elem.title;
+                    functs.setSechs(title)
+                })
+
+            }
+
+        }
+    },
     getRecs() {
         //read data stored in database
         const transaction = db.transaction("Records",
@@ -881,7 +994,7 @@ const functs = {
                 allData.push(cursor.value); // Add the current record to the array
                 cursor.continue(); // Move to the next record
             } else {
-                console.log(allData)
+
                 allData.forEach(rec => {
 
                     if (rec.blob !== null && rec.blob !== undefined) {
@@ -1367,7 +1480,7 @@ window.onload = function() {
     window.ctrls = "";
 
     //create an instance of indexedDB database
-    const request = indexedDB.open("StarWave_DB", 1);
+    const request = indexedDB.open("StarWave_DB", 2);
 
     request.onupgradeneeded = (event) => {
         db = event.target.result;
@@ -1377,6 +1490,12 @@ window.onload = function() {
             db.createObjectStore("Records", {
                 keyPath: "id"
             }); // Specify a keyPath
+        }
+
+        if (!db.objectStoreNames.contains("Searchs")) {
+            db.createObjectStore("Searchs", {
+                keyPath: "title"
+            })
         }
     };
 
