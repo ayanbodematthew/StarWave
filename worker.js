@@ -1,6 +1,6 @@
 const cacheFiles = ["/Audio.html", "/Audio.js"]
 
-const cacheName = "v3";
+const cacheName = "v4";
 
 const dura = 7 * 24 * 60 * 60 * 1000;
 
@@ -48,7 +48,7 @@ self.addEventListener("fetch", function(event) {
             if (resp) {
                 return resp;
             }
-            return caches.match("./Audio.html")
+            return caches.match("/Audio.html")
         })
     }))
 })
