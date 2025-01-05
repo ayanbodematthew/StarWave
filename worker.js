@@ -8,6 +8,8 @@ self.addEventListener("install", function(event) {
     event.waitUntil(caches.open(cacheName).then(cache => {
         console.log("Worker adding file to cache: ", cache)
         return cache.addAll(cacheFiles)
+    }).then(() => {
+        self.skipWaiting();
     }))
 })
 
@@ -19,6 +21,8 @@ self.addEventListener("activate", function(event) {
                 return caches.delete(thisCacheName)
             }
         }))
+    }).then(() => {
+        self.client.claim();
     }))
 })
 
