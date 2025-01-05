@@ -9,7 +9,7 @@ self.addEventListener("install", function(event) {
         console.log("Worker adding file to cache: ", cache)
         return cache.addAll(cacheFiles)
     }).then(() => {
-        self.skipWaiting();
+        return self.skipWaiting();
     }))
 })
 
@@ -22,7 +22,7 @@ self.addEventListener("activate", function(event) {
             }
         }))
     }).then(() => {
-        self.client.claim();
+        return self.clients.claim();
     }))
 })
 
