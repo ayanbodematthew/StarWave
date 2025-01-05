@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "start_url": "./Audio.html",
     "scope": "./",
-    "description": "A media audio recorder and audio player",
+    "description": "Learning made easier for you, watch videos from youtube, search for solutions to problems and also record and playback audio - for ease of note taking.",
     "display": "standalone",
     "display_override": [
         "fullscreen",
