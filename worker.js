@@ -56,20 +56,42 @@ self.addEventListener("fetch", function(event) {
 })
 
 async function cacheFirstWithExpiration(req) {
-    const cache = await caches.open(cacheName);
 
-    // Check cache first
-    const cachedResp = await cache.match(req);
-    if (cachedResp) {
-        return cachedResp;
+    try {
+        /* code */
+        const cache = await caches.open(cacheName);
+
+        // Check cache first
+        const cachedResp = await cache.match(req);
+        var resps;
+
+        if (cachedResp) {
+            resps = cachedResp;
+        } else {
+            // Fetch from network if not in cache
+            resps = await fetch(req);
+
+            if (resps.ok) {
+                // Clone the response before caching
+                await cache.put(req, resps.clone());
+            }
+        }
+
+        let data = await resps.json()
+
+        if (!data || !data.items) {
+            return;
+        } else {
+            console.log(data)
+            return data;
+        }
+
+    } catch (e) {
+        console.error("Error: ", e)
+        return new Response("Failed to fetch and no cached version available.", {
+            status: 503,
+            statusText: "Service unavailable."
+        });
     }
 
-    // Fetch from network if not in cache
-    const netResp = await fetch(req);
-    if (netResp && netResp.ok) {
-        // Clone the response before caching
-        cache.put(req, netResp.clone());
-    }
-
-    return netResp;
 }
