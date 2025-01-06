@@ -1142,7 +1142,7 @@ const fetchVideo = () => {
         try {
 
             const response = await fetch(endpoint);
-            const data = response;
+            const data = response.json();
 
             const resultsContainer = document.getElementById("pasty");
 
