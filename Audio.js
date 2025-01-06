@@ -1463,7 +1463,7 @@ window.onload = function() {
     }
 
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/worker.js", {scope: "/"}).then(res => {
+        navigator.serviceWorker.register("./worker.js", {scope: "./"}).then(res => {
             res.addEventListener("updatefound", () => {
                 var update = res.installing;
                 console.log(update)
