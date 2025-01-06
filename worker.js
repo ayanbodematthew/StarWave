@@ -55,7 +55,7 @@ self.addEventListener("fetch", function(event) {
             })
 
         })
-
+        return;
     }
 
     event.respondWith(fetch(event.request).then(response => {
