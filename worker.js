@@ -2,8 +2,6 @@ const cacheFiles = ["/Audio.html", "/Audio.js"]
 
 const cacheName = "v4";
 
-const dura = 7 * 24 * 60 * 60 * 1000;
-
 self.addEventListener("install", function(event) {
     event.waitUntil(caches.open(cacheName).then(cache => {
         console.log("Worker adding file to cache: ", cache)
@@ -34,8 +32,29 @@ self.addEventListener("fetch", function(event) {
 
     var url = new URL(event.request.url)
     if (url.origin == "https://www.googleapis.com") {
-        event.respondWith(cacheFirstWithExpiration(event.request))
-        return;
+
+        event.respondWith(() => {
+            return caches.match(event.request).then(resp => {
+
+                if (resp) {
+                    console.log(resp)
+                    return resp;
+                }
+
+            })
+
+            let resps = fetch(event.request)
+            resps.then(respy => {
+                let clone = respy.clone()
+                caches.open(cacheName).then(cache => {
+                    cache.put(event.request, clone)
+                })
+                return respy;
+            }).catch(() => {
+                return;
+            })
+        })
+
     }
 
     event.respondWith(fetch(event.request).then(response => {
@@ -54,44 +73,3 @@ self.addEventListener("fetch", function(event) {
         })
     }))
 })
-
-async function cacheFirstWithExpiration(req) {
-
-    try {
-        /* code */
-        const cache = await caches.open(cacheName);
-
-        // Check cache first
-        const cachedResp = await cache.match(req);
-        var resps;
-
-        if (cachedResp) {
-            resps = cachedResp;
-        } else {
-            // Fetch from network if not in cache
-            resps = await fetch(req);
-
-            if (resps.ok) {
-                // Clone the response before caching
-                await cache.put(req, resps.clone());
-            }
-        }
-
-        let data = await resps.json()
-
-        if (!data || !data.items) {
-            return;
-        } else {
-            console.log(data)
-            return data;
-        }
-
-    } catch (e) {
-        console.error("Error: ", e)
-        return new Response("Failed to fetch and no cached version available.", {
-            status: 503,
-            statusText: "Service unavailable."
-        });
-    }
-
-}
