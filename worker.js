@@ -30,34 +30,6 @@ self.addEventListener("fetch", function(event) {
         return;
     }
 
-    var url = new URL(event.request.url)
-    if (url.origin == "https://www.googleapis.com") {
-
-        event.respondWith(async () => {
-            return await caches.match(event.request).then(resp => {
-
-                if (resp) {
-                    console.log(resp)
-                    return resp;
-                }
-
-            }).catch(() => {
-
-                let resps = fetch(event.request)
-                resps.then(respy => {
-                    let clone = respy.clone()
-                    caches.open(cacheName).then(cache => {
-                        cache.put(event.request, clone)
-                    })
-                    return respy;
-                })
-
-            })
-
-        })
-        return;
-    }
-
     event.respondWith(fetch(event.request).then(response => {
         const clone = response.clone();
         caches.open(cacheName).then(cache => {
