@@ -219,13 +219,6 @@ wiki.addEventListener("click", () => {
 
                             cont.insertAdjacentHTML("beforeend", elem);
 
-                            var ach = document.querySelectorAll(".nipy")
-
-                            var link = ach.querySelectorAll("a")
-
-                            link.style.color = "#f90";
-                            link.style.textDecoration = "underline";
-
                         }).catch(err2 => {
                             console.error("Error_2: ", err2)
                         })
@@ -256,8 +249,9 @@ wiki.addEventListener("click", () => {
             if (ele.innerHTML !== "") {
                 return;
             }
-            functs.getWikiSech()
+
             functs.modCls("mod4")
+            functs.getWikiSech()
 
         },
             {
@@ -275,8 +269,6 @@ fily.addEventListener("click", function() {
 
         var mod = document.getElementById("mod")
         mod.style.display = "block";
-
-        var cls = document.getElementById("cls")
 
         functs.modCls("mod")
 
@@ -924,7 +916,7 @@ const functs = {
             Id += rand;
         }
 
-        var pad = `<div style='padding:3vw; font-size:3.5vw' id='${Id}'>${title}</div>`;
+        var pad = `<div style='padding:3vw; font-size:3.5vw; margin:1vw; border-bottom: var(--clr6) 0.01em solid; font-weight: bold' id='${Id}'>${title}</div>`;
 
         document.getElementById("oths").insertAdjacentHTML("beforeend", pad)
 
@@ -1142,7 +1134,7 @@ const fetchVideo = () => {
         try {
 
             const response = await fetch(endpoint);
-            const data = response.json();
+            const data = await response.json();
 
             const resultsContainer = document.getElementById("pasty");
 
@@ -1463,7 +1455,9 @@ window.onload = function() {
     }
 
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./worker.js", {scope: "./"}).then(res => {
+        navigator.serviceWorker.register("./worker.js", {
+            scope: "./"
+        }).then(res => {
             res.addEventListener("updatefound", () => {
                 var update = res.installing;
                 console.log(update)
@@ -1510,13 +1504,13 @@ window.onload = function() {
     };
 
     const tits = "Welcome Message";
-    const bod = "Hello there, it's good to have you here on StarWave. \nStarWave is a platform for recording audio stream, selecting and playing audio files on your device as well as watching video previews from youtube.\nStarWave uses ads for generating income and revenue for growth and development.\nFor every heart you click and support you gave, you are contributing to our growth.\nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
+    const bod = "Hello there, it's good to have you here on StarWave. \nStarWave has made learning easier for you, watch videos from youtube, search for solutions to problems and also record and playback audio - for ease of note taking.\nStarWave uses ads for generating income and revenue for growth and development.\nWe are but a young but growing ecosystem with hope to build on more and more functionalities, thank you for joining us.";
 
     if (Notification.permission == 'granted') {
         var check = localStorage.getItem("noty")
-        if (check !== "yes") {
+        if (check !== "yeah") {
             handleNotification(tits, bod)
-            localStorage.setItem("noty", "yes")
+            localStorage.setItem("noty", "yeah")
         }
     } else {
         Notification.requestPermission().then(permission => {

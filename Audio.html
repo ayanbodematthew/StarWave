@@ -52,6 +52,8 @@
             --clr6: white;
             --clr7: #282828;
             --clr9: #282828;
+            --clr10: rgba(0,0,0,0.8);
+            --clr11: #fff;
         }
         /* Dark Mode */
         [data-theme="dark"] {
@@ -59,6 +61,8 @@
             --clr2: #282828;
             --clr7: #282828;
             --clr9: #ccc;
+            --clr10: rgba(200,200,200,0.8);
+            --clr11: #111;
         }
         html {
             width: 100vw;
@@ -468,7 +472,7 @@
             color: var(--clr4);
         }
         .btm_bar {
-            background: rgba(100,100,100,0.8);
+            background: rgba(50,50,50,0.8);
             width: 98%;
             padding: 1vw;
             height: 51%;
@@ -548,7 +552,7 @@
             padding-top: 2vw;
             text-align: center;
             font-weight: bolder;
-            background: #ccc;
+            background: var(--clr6);
             border-radius: 1vw;
             font-size: 3.5vw;
             color: #191919;
@@ -634,6 +638,17 @@
         }
         .nipy p {
             font-size: 3vw;
+            font-weight: bold;
+        }
+        .info {
+            padding: 2vw;
+            text-align: center;
+            background: var(--clr10);
+            color: var(--clr11);
+            border-radius: 3vw;
+            font-size: 3vw;
+            margin: 5% auto;
+            width: 75%;
             font-weight: bold;
         }
         [contenteditable="true"]:empty::before {
@@ -841,7 +856,9 @@
     </header>
 
     <section id="wiki_pad" class="sps">
-        <div id="w_pasty" class="wiki_pasty"></div>
+        <div id="w_pasty" class="wiki_pasty">
+            <div class="info">Search for topics based on your interest or course of study </div>
+        </div>
         <div class="wiki_cont">
             <button id="hist" class="hist">
                 <i class="fa fa-list-ul"></i>
@@ -959,7 +976,6 @@
             <button id="continue"> || </button>
         </div>
     </section>
-    <a id="download" hidden>download</a>
     <input type="file" id="file" accept="audio/*" hidden />
 
     <script src="./Audio.js" type="text/javascript" charset="utf-8"></script>
