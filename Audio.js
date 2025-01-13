@@ -176,6 +176,7 @@ wiki.addEventListener("click", () => {
             mus.style.display = "none";
             player.style.display = "block";
         }
+        document.getElementById("adss").style.display = "none";
         window.caty = "wiki_pad";
 
         var sen = document.getElementById("sen")
