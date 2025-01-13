@@ -168,15 +168,15 @@ wiki.addEventListener("click", () => {
             return;
         }
 
-        var mus = document.getElementById(window.caty)
-        var player = document.getElementById("wiki_pad")
+        if (window.caty !== "") {
+            var mus = document.getElementById(window.caty)
+            var player = document.getElementById("wiki_pad")
 
-        mod.style.display = "none";
-        mus.style.display = "none";
-        player.style.display = "block";
-
+            mod.style.display = "none";
+            mus.style.display = "none";
+            player.style.display = "block";
+        }
         window.caty = "wiki_pad";
-        document.getElementById("adss").style.display = "none";
 
         var sen = document.getElementById("sen")
         var hist = document.getElementById("hist")
@@ -648,7 +648,7 @@ const functs = {
 
         const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(elem)}&type=video&maxResults=5&key=${API_KEY}`;
 
-        var disp = document.getElementById("disp")
+        var disp = document.getElementById("pasty")
 
         async function sech() {
 
@@ -670,7 +670,7 @@ const functs = {
                     iframe.allowFullscreen = true;
 
                     // Add iframe to the results container
-                    if (disp.innerHTML.includes("Error") || disp.innerHTML.includes("loading")) {
+                    if (disp.innerHTML.includes("Error") || disp.innerHTML.includes("Search")) {
                         disp.innerHTML = "";
                     }
 
@@ -681,17 +681,6 @@ const functs = {
             } catch (e) {
                 disp.innerHTML = `<div style='padding: 2vw'> <b>Error</b> <br><br> ${e.message} </div>`;
             }
-
-            var mod = document.getElementById("mod3")
-            mod.style.display = "block";
-
-            document.getElementById("ext").addEventListener("click",
-                () => {
-                    mod.style.display = "none";
-                },
-                {
-                    passive: true
-                })
 
         }
 
@@ -1123,66 +1112,6 @@ const handleNotification = (title, body) => {
 
 }
 
-const fetchVideo = () => {
-
-    const API_KEY = 'AIzaSyBm4VRB8sPsSjNPLxVJm83PLrHOSh8FRUI';
-
-    async function searchYouTube(query) {
-
-        const endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${API_KEY}`;
-
-        try {
-
-            const response = await fetch(endpoint);
-            const data = await response.json();
-
-            const resultsContainer = document.getElementById("pasty");
-
-            if (resultsContainer.innerHTML.includes("loading")) {
-                resultsContainer.innerHTML = "";
-            }
-
-            // Display each video in an iframe
-            data.items.forEach(item => {
-                const videoId = item.id.videoId;
-
-                // Create an iframe element
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                iframe.width = '100%';
-                iframe.height = '150vw';
-                iframe.frameBorder = '0';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-
-                // Add iframe to the results container
-                resultsContainer.appendChild(iframe);
-            });
-
-        } catch (error) {
-            console.error('Error fetching YouTube data:', error);
-        }
-    }
-
-    var catys = ["Latest tech news",
-        "Elon musk interview",
-        "Fifa world cup 2024",
-        "Tesla cybertruck review 2024",
-        "Football match highlights 2024",
-        "Relaxing music",
-        "Comedy stand-up",
-        "Horror movie trailer",
-        "Space exploration documentaries",
-        "Nollywood songs",
-        "Official trailer Avatar 3",
-        "Japanese anime trailer"]
-
-    catys.forEach(caty => {
-        searchYouTube(caty)
-    })
-
-}
-
 const user_guide = () => {
 
     const steps = document.querySelectorAll(".highlight");
@@ -1469,7 +1398,7 @@ window.onload = function() {
 
     window.roy = 0;
     window.ply = "";
-    window.caty = "mus_pad";
+    window.caty = "";
     window.recorder = "";
     window.ctrls = "";
 
@@ -1495,7 +1424,9 @@ window.onload = function() {
 
     request.onsuccess = (event) => {
         db = event.target.result;
-        fetchVideo()
+        setTimeout(function() {
+            wiki.click()
+        }, 50);
     };
 
     request.onerror = (event) => {
